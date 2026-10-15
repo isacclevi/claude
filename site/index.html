@@ -29,14 +29,6 @@
       <a data-page="criativos"><span class="ic">▣</span>Criativos / Anúncios</a>
     </nav>
 
-    <div class="nav-label">Período</div>
-    <div class="ranges" id="ranges">
-      <button data-r="7">Últimos 7 dias</button>
-      <button data-r="14">Últimos 14 dias</button>
-      <button data-r="30" class="on">Últimos 30 dias</button>
-      <button data-r="0">Todo o histórico</button>
-    </div>
-
     <div class="foot">
       <div class="mini">ORD</div>
       <div><div class="t">ORD</div><div class="s">Oliveira Resultados Digitais</div></div>
@@ -47,8 +39,16 @@
     <!-- ========== VISÃO GERAL ========== -->
     <section id="page-visao">
       <div class="page-head">
-        <h1>Visão Geral</h1>
-        <p id="visaoSub">Desempenho do perfil no Instagram — alcance, engajamento e seguidores.</p>
+        <div class="ttl">
+          <h1>Visão Geral</h1>
+          <p id="visaoSub">Desempenho do perfil no Instagram — alcance, engajamento e seguidores.</p>
+        </div>
+      <div class="datefilter">
+        <div class="fld"><label for="deV">De</label><input type="date" id="deV"></div>
+        <div class="fld"><label for="ateV">Até</label><input type="date" id="ateV"></div>
+        <button id="aplicarV">Aplicar</button>
+        <button class="ghost" id="limparV">Todo o histórico</button>
+      </div>
       </div>
       <div class="kpis" id="visaoKpis"></div>
       <div class="card">
@@ -67,8 +67,16 @@
     <!-- ========== NÚMEROS DO TRÁFEGO ========== -->
     <section id="page-trafego" class="hidden">
       <div class="page-head">
-        <h1>Números do Tráfego</h1>
-        <p id="trafegoSub">Métricas do gerenciador de anúncios.</p>
+        <div class="ttl">
+          <h1>Números do Tráfego</h1>
+          <p id="trafegoSub">Métricas do gerenciador de anúncios.</p>
+        </div>
+      <div class="datefilter">
+        <div class="fld"><label for="deT">De</label><input type="date" id="deT"></div>
+        <div class="fld"><label for="ateT">Até</label><input type="date" id="ateT"></div>
+        <button id="aplicarT">Aplicar</button>
+        <button class="ghost" id="limparT">Todo o histórico</button>
+      </div>
       </div>
       <div class="kpis" id="trafegoKpis"></div>
       <div class="card">
@@ -91,8 +99,16 @@
     <!-- ========== CRIATIVOS ========== -->
     <section id="page-criativos" class="hidden">
       <div class="page-head">
-        <h1>Criativos / Anúncios</h1>
-        <p id="criativosSub"></p>
+        <div class="ttl">
+          <h1>Criativos / Anúncios</h1>
+          <p id="criativosSub"></p>
+        </div>
+      <div class="datefilter">
+        <div class="fld"><label for="deC">De</label><input type="date" id="deC"></div>
+        <div class="fld"><label for="ateC">Até</label><input type="date" id="ateC"></div>
+        <button id="aplicarC">Aplicar</button>
+        <button class="ghost" id="limparC">Todo o histórico</button>
+      </div>
       </div>
       <div class="card">
         <div class="card-head">

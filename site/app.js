@@ -17,18 +17,17 @@
   const ratio = (a, b) => (!b ? null : a / b)
 
   // ---------- período ----------
-  let dias = 30
   let pagina = 'visao'
 
   const todasDatas = D.daily.account.map((r) => r.date)
+  const primeiraData = todasDatas[0]
   const ultimaData = todasDatas[todasDatas.length - 1]
 
-  function janela() {
-    if (!dias) return { de: todasDatas[0], ate: ultimaData }
-    const fim = new Date(ultimaData + 'T00:00:00Z')
-    const ini = new Date(fim.getTime() - (dias - 1) * 86400000)
-    return { de: ini.toISOString().slice(0, 10), ate: ultimaData }
-  }
+  /* Janela escolhida à mão, pelo filtro no topo de cada seção. O estado é um
+     só: trocar as datas em uma seção vale para as outras, senão páginas
+     diferentes mostrariam períodos diferentes sem avisar. */
+  let periodo = { de: primeiraData, ate: ultimaData }
+  const janela = () => periodo
   const dentro = (d, j) => d >= j.de && d <= j.ate
 
   const soma = (linhas, campo) => linhas.reduce((t, r) => t + (r[campo] || 0), 0)
@@ -94,8 +93,8 @@
     el.innerHTML = `
       <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${rotulo} por dia">
         <defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#d9c08b" stop-opacity=".22"/>
-          <stop offset="100%" stop-color="#d9c08b" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#f2a9c4" stop-opacity=".22"/>
+          <stop offset="100%" stop-color="#f2a9c4" stop-opacity="0"/>
         </linearGradient></defs>
         <g class="grid axis">${grade}</g>
         <g class="axis">${eixoX}</g>
@@ -313,10 +312,41 @@
     $('nav').querySelectorAll('a').forEach((o) => o.classList.remove('active'))
     a.classList.add('active'); pagina = a.dataset.page; render()
   })
-  $('ranges').querySelectorAll('button').forEach((b) => b.onclick = () => {
-    $('ranges').querySelectorAll('button').forEach((o) => o.classList.remove('on'))
-    b.classList.add('on'); dias = Number(b.dataset.r); render()
+  // ---------- filtros de data ----------
+  const SUFIXOS = ['V', 'T', 'C']
+
+  function pintarFiltros() {
+    SUFIXOS.forEach((sf) => {
+      const de = $('de' + sf), ate = $('ate' + sf)
+      de.value = periodo.de; ate.value = periodo.ate
+      de.min = primeiraData; de.max = ultimaData
+      ate.min = primeiraData; ate.max = ultimaData
+    })
+  }
+
+  SUFIXOS.forEach((sf) => {
+    $('aplicar' + sf).onclick = () => {
+      let de = $('de' + sf).value || primeiraData
+      let ate = $('ate' + sf).value || ultimaData
+      // Datas invertidas são engano comum; trocar é mais útil que recusar.
+      if (de > ate) [de, ate] = [ate, de]
+      periodo = {
+        de: de < primeiraData ? primeiraData : de,
+        ate: ate > ultimaData ? ultimaData : ate,
+      }
+      pintarFiltros(); render()
+    }
+    $('limpar' + sf).onclick = () => {
+      periodo = { de: primeiraData, ate: ultimaData }
+      pintarFiltros(); render()
+    }
+    // Enter no campo aplica, em vez de não fazer nada.
+    ;['de' + sf, 'ate' + sf].forEach((id) => $(id).addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') $('aplicar' + sf).click()
+    }))
   })
+
+  pintarFiltros()
 
   render()
 })()
