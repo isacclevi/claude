@@ -1,0 +1,51 @@
+name: Atualizar dashboard
+
+# 1x ao dia. 11:00 UTC = 08:00 em Fortaleza (-03:00, sem horário de verão).
+# workflow_dispatch deixa rodar na mão pelo botão "Run workflow".
+on:
+  schedule:
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+concurrency:
+  # Duas rodadas ao mesmo tempo brigariam pelo mesmo raw/ e pelo mesmo deploy.
+  group: atualizar-dashboard
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Rodar o ciclo
+        env:
+          WINDSOR_API_KEY: ${{ secrets.WINDSOR_API_KEY }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: node atualizar.js
+
+      # O histórico da série de seguidores do perfil só existe porque cada
+      # extração fica guardada: a origem entrega 30 dias e recusa datas
+      # anteriores. Sem este commit, uma rodada que não volte em 30 dias abre
+      # um buraco que não tem como preencher depois.
+      - name: Guardar as extrações do dia
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add raw site/data/dataset.json site/creatives
+          git diff --cached --quiet && echo "nada mudou" && exit 0
+          git commit -m "Dados do dashboard em $(TZ=America/Fortaleza date +%F)"
+          git push
