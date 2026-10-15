@@ -108,6 +108,7 @@ function extracoes() {
       // image_url, title nem video_asset_video_id — com eles a resposta
       // despenca para duas linhas.
       arquivo: `creatives_${hoje}.json`,
+      criativos: true,
       connector: 'facebook',
       conta: CONTA_ADS,
       de: desde,
@@ -167,7 +168,11 @@ async function puxar(extracao, tentativas = 3) {
       return await puxarUmaVez(extracao)
     } catch (erro) {
       // A origem pede retry em texto; vale repetir antes de desistir.
-      const transitorio = /retry shortly|incomplete time-series|timeout|ECONNRESET|502|503|504/i.test(erro.message)
+      // 'fetch failed' é o que o Node diz para qualquer erro de rede, e foi
+      // exatamente o que derrubou a rodada de 2026-10-15. Tudo que não é erro
+      // de dado ou de credencial vale repetir.
+      const definitivo = /API key|nenhuma linha da conta|sem account_id|nenhuma lista/i.test(erro.message)
+      const transitorio = !definitivo
       if (i >= tentativas || !transitorio) throw erro
       const espera = 15_000 * i
       log(`  ${extracao.connector}: ${erro.message.slice(0, 110)} — nova tentativa em ${espera / 1000}s`)
@@ -184,7 +189,12 @@ async function puxarUmaVez({ connector, conta, de, ate, fields }) {
   url.searchParams.set('date_to', ate)
   url.searchParams.set('fields', fields.join(','))
 
-  const r = await fetch(url, { headers: { accept: 'application/json' } })
+  // Sem timeout explícito o fetch do Node espera para sempre, e a rodada
+  // agendada ficaria pendurada até o limite do job.
+  const r = await fetch(url, {
+    headers: { accept: 'application/json' },
+    signal: AbortSignal.timeout(Number(process.env.TIMEOUT_MS || 600_000)),
+  })
   const texto = await r.text()
   let corpo
   try {
@@ -254,9 +264,45 @@ function podar(manter = 5) {
   }
 }
 
+/** Ids de criativo que já estão em raw/. */
+function criativosConhecidos() {
+  const ids = new Set()
+  for (const nome of readdirSync(RAW)) {
+    if (!/^creatives.*\.json$/.test(nome)) continue
+    const payload = JSON.parse(readFileSync(join(RAW, nome), 'utf8'))
+    const linhas = Object.values(payload).find((v) => Array.isArray(v)) || []
+    for (const l of linhas) if (l.creative_id) ids.add(String(l.creative_id))
+  }
+  return ids
+}
+
+/** Ids de criativo que aparecem nas séries diárias. */
+function criativosNaSerie() {
+  const ids = new Set()
+  for (const nome of readdirSync(RAW)) {
+    if (!/^ad_daily.*\.json$/.test(nome)) continue
+    const payload = JSON.parse(readFileSync(join(RAW, nome), 'utf8'))
+    const linhas = Object.values(payload).find((v) => Array.isArray(v)) || []
+    for (const l of linhas) if (l.creative_id) ids.add(String(l.creative_id))
+  }
+  return ids
+}
+
 async function coletar() {
   mkdirSync(RAW, { recursive: true })
   for (const extracao of extracoes()) {
+    // A consulta de criativos não leva `date`, então a origem agrega TODO
+    // anúncio do workspace com o texto completo de cada um — pesada o
+    // bastante para derrubar a rodada por tempo. E ela quase nunca muda:
+    // só vale pagar esse custo quando aparece criativo que ainda não temos.
+    if (extracao.criativos) {
+      const novos = [...criativosNaSerie()].filter((id) => !criativosConhecidos().has(id))
+      if (!novos.length) {
+        log('  criativos: nada novo, extração dispensada')
+        continue
+      }
+      log(`  criativos: ${novos.length} novo(s) — ${novos.slice(0, 4).join(', ')}`)
+    }
     let linhas = await puxar(extracao)
     if (extracao.pos) linhas = extracao.pos(linhas)
     if (!linhas.length) throw new Error(`${extracao.arquivo}: origem devolveu zero linhas`)
