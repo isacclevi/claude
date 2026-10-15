@@ -1,17 +1,116 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Dashboard de performance de marketing digital — Tainá Psiquiatra" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <title>Tainá Psiquiatra · Dashboard de Performance</title>
-    <script type="module" crossorigin src="./assets/index-DrafZvlU.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BmGtcCKg.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Dashboard de performance — Tainá Psiquiatra">
+<title>Tainá Psiquiatra · Dashboard</title>
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="logo.jpg" alt="Tainá Josino">
+      <div>
+        <div class="name">Tainá Josino</div>
+        <div class="sub">Médica psiquiatra</div>
+      </div>
+    </div>
+
+    <div class="nav-label">Seções</div>
+    <nav class="nav" id="nav">
+      <a class="active" data-page="visao"><span class="ic">◉</span>Visão Geral</a>
+      <a data-page="trafego"><span class="ic">▤</span>Números do Tráfego</a>
+      <a data-page="criativos"><span class="ic">▣</span>Criativos / Anúncios</a>
+    </nav>
+
+    <div class="nav-label">Período</div>
+    <div class="ranges" id="ranges">
+      <button data-r="7">Últimos 7 dias</button>
+      <button data-r="14">Últimos 14 dias</button>
+      <button data-r="30" class="on">Últimos 30 dias</button>
+      <button data-r="0">Todo o histórico</button>
+    </div>
+
+    <div class="foot">
+      <div class="mini">ORD</div>
+      <div><div class="t">ORD</div><div class="s">Oliveira Resultados Digitais</div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <!-- ========== VISÃO GERAL ========== -->
+    <section id="page-visao">
+      <div class="page-head">
+        <h1>Visão Geral</h1>
+        <p id="visaoSub">Desempenho do perfil no Instagram — alcance, engajamento e seguidores.</p>
+      </div>
+      <div class="kpis" id="visaoKpis"></div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Evolução diária do perfil</h2>
+            <p class="hint">Uma métrica por vez. Passe o mouse para ver o dia.</p>
+          </div>
+          <div class="metrics" id="visaoMetrics"></div>
+        </div>
+        <div class="card-body"><div class="plot" id="visaoPlot"></div></div>
+      </div>
+      <p class="note" id="visaoNota"></p>
+    </section>
+
+    <!-- ========== NÚMEROS DO TRÁFEGO ========== -->
+    <section id="page-trafego" class="hidden">
+      <div class="page-head">
+        <h1>Números do Tráfego</h1>
+        <p id="trafegoSub">Métricas do gerenciador de anúncios.</p>
+      </div>
+      <div class="kpis" id="trafegoKpis"></div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Evolução diária do investimento</h2>
+            <p class="hint">Uma métrica por vez. Passe o mouse para ver o dia.</p>
+          </div>
+          <div class="metrics" id="trafegoMetrics"></div>
+        </div>
+        <div class="card-body"><div class="plot" id="trafegoPlot"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Campanhas no período</h2></div></div>
+        <div class="card-body"><div class="scroll"><table id="tabCampanhas"></table></div></div>
+      </div>
+      <p class="note" id="trafegoNota"></p>
+    </section>
+
+    <!-- ========== CRIATIVOS ========== -->
+    <section id="page-criativos" class="hidden">
+      <div class="page-head">
+        <h1>Criativos / Anúncios</h1>
+        <p id="criativosSub"></p>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <h2>Top publicações</h2>
+            <p class="hint">Ordenadas pelo engajamento do post no Instagram: curtidas, comentários, salvamentos e compartilhamentos.</p>
+          </div>
+        </div>
+        <div class="card-body"><div class="grid-ads" id="topPosts"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><div><h2>Todos os criativos</h2><p class="hint" id="criativosHint"></p></div></div>
+        <div class="card-body"><div class="grid-ads" id="gridAds"></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
 </html>

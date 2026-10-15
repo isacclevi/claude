@@ -234,6 +234,15 @@ def main():
                 "reach": num(r.get("reach")),
                 "views": num(r.get("views")),
                 "interactions": num(r.get("total_interactions")),
+                # Métricas do perfil. Só existem nas extrações a partir de
+                # 2026-10-15: as anteriores não pediam esses campos, e a origem
+                # não devolve mais de 30 dias para trás. Dia sem o dado fica
+                # None, e a interface mostra "—" em vez de fingir zero.
+                "likes": num(r["likes"]) if r.get("likes") is not None else None,
+                "comments": num(r["comments"]) if r.get("comments") is not None else None,
+                "shares": num(r["shares"]) if r.get("shares") is not None else None,
+                "saves": num(r["saves"]) if r.get("saves") is not None else None,
+                "engaged": num(r["accounts_engaged"]) if r.get("accounts_engaged") is not None else None,
             }
             for r in profile_rows
             if r.get("date")
@@ -368,7 +377,16 @@ def main():
         },
     }
 
-    (OUT_DATA / "dataset.json").write_text(json.dumps(dataset, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    compacto = json.dumps(dataset, ensure_ascii=False, separators=(",", ":"))
+    (OUT_DATA / "dataset.json").write_text(compacto, encoding="utf-8")
+    # data.js é o que a interface lê: sem fetch, sem CORS, sem estado de
+    # carregamento. Mesmo padrão dos B.I. do Depot e do Cafofo.
+    (RAIZ / "site" / "data.js").write_text(
+        f"/* Gerado por scripts/etl/build_dataset.py em {now.isoformat(timespec='seconds')} — NÃO editar à mão.\n"
+        f"   Fonte: Windsor.ai · facebook {CONFIG['account']['id']} · instagram {CONFIG['account']['instagram']['id']} */\n"
+        f"window.TAINA_DATA = {compacto}\n",
+        encoding="utf-8",
+    )
     coverage = f"{profile_daily[0]['date']} a {profile_daily[-1]['date']}" if profile_daily else "sem dados"
     print(f"dias {len(account_daily)} ({dates[0]} a {dates[-1]}) | campanhas {len(campaigns)} | "
           f"anúncios {len(ads)} | posts vinculados {linked}")

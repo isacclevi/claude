@@ -135,7 +135,9 @@ function extracoes() {
       conta: CONTA_IG,
       de: dia(-30),
       ate: dia(-1),
-      fields: ['date', 'account_id', 'follower_count', 'reach', 'views', 'total_interactions'],
+      fields: ['date', 'account_id', 'follower_count', 'reach', 'views',
+        'total_interactions', 'likes', 'comments', 'shares', 'saves',
+        'accounts_engaged'],
       pos: descartarUltimoDiaZerado,
     },
     {
