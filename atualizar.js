@@ -167,6 +167,13 @@ function extracoes() {
       // despenca para duas linhas.
       arquivo: `creatives_${hoje}.json`,
       criativos: true,
+      // Esta é a consulta mais cara de todas: sem `date` nos campos, a origem
+      // devolve uma linha por anúncio do workspace com o texto completo de
+      // cada um. Ela aceita o recorte de datas do mesmo jeito, então também
+      // vai fatiada — foi o que sobrou estourando o limite de conexão depois
+      // que campanhas e anúncios passaram a ser fatiados.
+      chave: (r) => r.ad_id,
+      fatia: 3,
       connector: 'facebook',
       conta: CONTA_ADS,
       de: desde,
