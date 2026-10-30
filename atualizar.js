@@ -342,7 +342,11 @@ function criativosConhecidos() {
     if (!/^creatives.*\.json$/.test(nome)) continue
     const payload = JSON.parse(readFileSync(join(RAW, nome), 'utf8'))
     const linhas = Object.values(payload).find((v) => Array.isArray(v)) || []
-    for (const l of linhas) if (l.creative_id) ids.add(String(l.creative_id))
+    // Windsor identifica o criativo em "creative_id"; o Meta, em "id".
+    for (const l of linhas) {
+      const id = l.creative_id || l.id
+      if (id) ids.add(String(id))
+    }
   }
   return ids
 }
@@ -374,6 +378,28 @@ async function coletar() {
       }
       log(`  criativos: ${novos.length} novo(s) — ${novos.slice(0, 4).join(', ')}`)
     }
+
+    // A consulta de criativos é a única que o fatiamento não resolve: sem
+    // `date` nos campos a origem varre o workspace inteiro de qualquer jeito.
+    // Quando ela falha, o anúncio novo fica sem texto, miniatura e link até a
+    // próxima rodada — e isso é muito melhor que derrubar a atualização
+    // inteira, que é o que acontecia. Os números não dependem dela.
+    if (extracao.criativos) {
+      try {
+        await coletarUma(extracao)
+      } catch (erro) {
+        log(`  criativos: FALHOU (${erro.message}). Seguindo sem eles — os ` +
+            'anúncios novos ficam sem texto e miniatura até a próxima rodada.')
+      }
+      continue
+    }
+    await coletarUma(extracao)
+  }
+  podar()
+}
+
+async function coletarUma(extracao) {
+  {
     let linhas
     if (extracao.chave) {
       // Fatiado: várias requisições curtas no lugar de uma longa, unidas aqui.
@@ -396,7 +422,6 @@ async function coletar() {
     )
     log(`  ${extracao.arquivo}: ${linhas.length} linhas`)
   }
-  podar()
 }
 
 // --- etapas locais ---------------------------------------------------------
