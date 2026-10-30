@@ -76,9 +76,41 @@ function credencial(arquivo, variavel) {
 // --- coleta ----------------------------------------------------------------
 // Uma entrada por arquivo de raw/. `data: false` pede uma linha por entidade em
 // vez de uma por dia — é assim que vem a lista de criativos.
+/** Maior data já presente nas séries diárias guardadas. */
+function ultimaDataGravada() {
+  let maior = null
+  for (const nome of readdirSync(RAW)) {
+    if (!/^(ad_daily|campaign_daily).*\.json$/.test(nome)) continue
+    const payload = JSON.parse(readFileSync(join(RAW, nome), 'utf8'))
+    const linhas = Object.values(payload).find((v) => Array.isArray(v)) || []
+    for (const l of linhas) {
+      const d = l.date || l.date_start
+      if (d && (!maior || d > maior)) maior = d
+    }
+  }
+  return maior
+}
+
+/** A janela normal é curta, mas ela pressupõe que a rodada de ontem aconteceu.
+ *  Se a rotina ficou dias parada — Actions falhando, container reciclado — a
+ *  janela curta pularia os dias do meio e o buraco passaria despercebido, já
+ *  que o dashboard continuaria mostrando um total plausível. Então o início
+ *  recua até um dia antes do último que já temos, sempre com sobreposição. */
+function inicioDaJanela() {
+  const curta = dia(-JANELA_DIAS)
+  const ultima = ultimaDataGravada()
+  if (!ultima) return PRIMEIRA_ENTREGA
+  const anterior = new Date(Date.parse(`${ultima}T00:00:00Z`) - 86400000).toISOString().slice(0, 10)
+  const escolhida = anterior < curta ? anterior : curta
+  if (escolhida < curta) {
+    log(`  última data guardada: ${ultima} — janela alargada para começar em ${escolhida}`)
+  }
+  return escolhida
+}
+
 function extracoes() {
   const seisMeses = dia(-183)
-  const desde = dia(-JANELA_DIAS)
+  const desde = inicioDaJanela()
   const hoje = dia(0)
   return [
     {
