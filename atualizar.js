@@ -49,6 +49,25 @@ const PRIMEIRA_ENTREGA = '2026-03-12'
  *  Para recuperar um trecho maior de uma vez: JANELA_DIAS=30 node atualizar.js */
 const JANELA_DIAS = Number(process.env.JANELA_DIAS || 5)
 
+/*  Nenhuma requisição pode demorar muito: uma conexão que passa de ~5 minutos
+ *  é cortada no meio e o Node só diz "fetch failed". Aconteceu em 2026-10-15 e
+ *  de novo em 2026-10-30, sempre no mesmo ponto. Como o servidor agrega o
+ *  workspace inteiro a cada chamada, o custo cresce com a janela — então a
+ *  janela é cortada em fatias e cada fatia vira uma requisição curta. O
+ *  resultado é o mesmo; o que muda é não depender de uma conexão longa. */
+const FATIA_DIAS = Number(process.env.FATIA_DIAS || 5)
+
+function fatias(de, ate, tamanho) {
+  const out = []
+  let ini = de
+  while (ini <= ate) {
+    const fim = new Date(Date.parse(`${ini}T00:00:00Z`) + (tamanho - 1) * 86400000).toISOString().slice(0, 10)
+    out.push({ de: ini, ate: fim > ate ? ate : fim })
+    ini = new Date(Date.parse(`${ini}T00:00:00Z`) + tamanho * 86400000).toISOString().slice(0, 10)
+  }
+  return out
+}
+
 const flags = new Set(process.argv.slice(2))
 const soTestar = flags.has('--testar')
 const semDeploy = flags.has('--sem-deploy')
@@ -109,12 +128,18 @@ function inicioDaJanela() {
 }
 
 function extracoes() {
-  const seisMeses = dia(-183)
+  /*  As publicações antigas já estão nos arquivos das rodadas anteriores, e o
+   *  ETL une tudo por permalink. Então a rodada diária só precisa alcançar as
+   *  recentes — o que custaria 37 requisições a seis meses custa 3 a 45 dias.
+   *  O preço: o engajamento de um post com mais de 45 dias fica no valor da
+   *  última rodada que o viu. Para refazer tudo: JANELA_MEDIA=183. */
+  const janelaMedia = Number(process.env.JANELA_MEDIA || 45)
   const desde = inicioDaJanela()
   const hoje = dia(0)
   return [
     {
       arquivo: `campaign_daily_${hoje}.json`,
+      chave: (r) => `${r.date}|${r.campaign_id}`,
       connector: 'facebook',
       conta: CONTA_ADS,
       de: desde,
@@ -126,6 +151,7 @@ function extracoes() {
     },
     {
       arquivo: `ad_daily_${hoje}.json`,
+      chave: (r) => `${r.date}|${r.ad_id}`,
       connector: 'facebook',
       conta: CONTA_ADS,
       de: desde,
@@ -150,9 +176,11 @@ function extracoes() {
     },
     {
       arquivo: `ig_media_${dia(0)}.json`,
+      chave: (r) => r.media_permalink || r.media_id,
+      fatia: 15,
       connector: 'instagram',
       conta: CONTA_IG,
-      de: seisMeses,
+      de: dia(-janelaMedia),
       ate: dia(0),
       fields: ['account_id', 'media_id', 'media_permalink', 'media_caption', 'media_type',
         'media_thumbnail_url', 'media_url', 'timestamp', 'media_engagement',
@@ -163,6 +191,8 @@ function extracoes() {
       // A origem entrega follower_count só nos últimos 30 dias e recusa datas
       // anteriores. O histórico existe porque cada extração fica guardada.
       arquivo: `ig_followers_${dia(0)}.json`,
+      chave: (r) => r.date,
+      fatia: 15,
       connector: 'instagram',
       conta: CONTA_IG,
       de: dia(-30),
@@ -337,7 +367,20 @@ async function coletar() {
       }
       log(`  criativos: ${novos.length} novo(s) — ${novos.slice(0, 4).join(', ')}`)
     }
-    let linhas = await puxar(extracao)
+    let linhas
+    if (extracao.chave) {
+      // Fatiado: várias requisições curtas no lugar de uma longa, unidas aqui.
+      const pedacos = fatias(extracao.de, extracao.ate, extracao.fatia || FATIA_DIAS)
+      const vistos = new Map()
+      for (const pedaco of pedacos) {
+        const parte = await puxar({ ...extracao, ...pedaco })
+        for (const r of parte) vistos.set(extracao.chave(r), r)
+        if (pedacos.length > 1) log(`    ${pedaco.de}..${pedaco.ate}: ${parte.length} linhas`)
+      }
+      linhas = [...vistos.values()]
+    } else {
+      linhas = await puxar(extracao)
+    }
     if (extracao.pos) linhas = extracao.pos(linhas)
     if (!linhas.length) throw new Error(`${extracao.arquivo}: origem devolveu zero linhas`)
     writeFileSync(
