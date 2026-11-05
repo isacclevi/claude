@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funil Gerardo Bastos · Jul–Out 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0E1116;overflow:hidden;font-family:'IBM Plex Sans',Arial,sans-serif}
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#deck{width:1920px;height:1080px;position:relative;transform-origin:center center;flex:none}
+#deck>section{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:none}
+#deck>section:not(.on){display:none!important}
+section div{min-width:0} section div:not([style*="display"]){display:flex;flex-direction:column}
+section p,section h1,section h2,section h3{margin:0}
+section h2{font-size:64px}
+section aside{display:none!important}
+section table{border-collapse:collapse}
+section th{font-weight:600;color:#5A6170;font-size:.85em;text-transform:uppercase;letter-spacing:1px;vertical-align:bottom}
+section th,section td{padding:.35em .6em;border-bottom:1px solid #D3CFC4}
+#bar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;gap:12px;padding:10px;font:13px 'IBM Plex Mono',monospace;color:#C9CED8;opacity:.25;transition:opacity .2s}
+#bar:hover{opacity:1}
+#bar button{background:#232833;color:#F6F5F1;border:1px solid #3A404C;border-radius:6px;padding:6px 12px;font:inherit;cursor:pointer}
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html,body{height:auto;overflow:visible;background:none}
+  #stage{position:static;display:block} #deck{transform:none!important;width:auto;height:auto}
+  #deck>section{position:relative;display:flex!important;page-break-after:always;break-after:page}
+  #bar{display:none}
+}
+</style></head><body>
+<div id="stage"><div id="deck">
+<section id="cover" data-transition="fade" style="background:#15191F;color:#F6F5F1;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7FA8E8">Gerardo Bastos · Funil de conversão</p>
+<div style="display:flex;flex-direction:column;gap:40px">
+<h1 style="font-family:'Archivo', Arial, sans-serif;font-size:160px;font-weight:800;line-height:1.0;letter-spacing:-3px">Lead → Agenda → Venda</h1>
+<p style="font-size:44px;line-height:1.3;color:#C9CED8;width:1300px">Julho a outubro de 2026, medido ponta a ponta: Omnichat, planilha do CRM e notas fiscais do Proteus.</p>
+</div>
+<div style="display:flex;gap:64px">
+<p style="font-size:32px;color:#C9CED8"><b style="color:#F6F5F1">13.200</b> atendimentos</p>
+<p style="font-size:32px;color:#C9CED8"><b style="color:#F6F5F1">1.937</b> agendamentos</p>
+<p style="font-size:32px;color:#C9CED8"><b style="color:#F6F5F1">1.365</b> vendas com nota</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#8A92A0">Dados de 01/07 a 31/10/2026 · análise de 05/11/2026</p>
+<aside>Apresentação do funil Lead → Agenda → Venda de julho a outubro. Três fontes cruzadas por telefone: atendimentos da Omnichat (topo), agendamentos da planilha do CRM (meio) e notas fiscais do Proteus (fundo).</aside>
+</section>
+<section id="funil" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">O funil · julho a outubro</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">De cada 100 atendimentos, 10 viram nota fiscal</h2>
+</div>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-radius:16px;padding:32px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;text-transform:uppercase;color:#5A6170">Atendimentos</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:88px;font-weight:800;line-height:1.0">13.200</p>
+<div style="height:16px;background:#2456B8;border-radius:8px"></div>
+<p style="font-size:24px;color:#5A6170">Omnichat · base 100%</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-radius:16px;padding:32px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;text-transform:uppercase;color:#5A6170">Agendaram</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:88px;font-weight:800;line-height:1.0">1.937</p>
+<div style="display:flex"><div style="width:49px;height:16px;background:#2456B8;border-radius:8px"></div></div>
+<p style="font-size:24px;color:#5A6170"><b style="color:#15191F">14,7%</b> dos atendimentos · CRM</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-radius:16px;padding:32px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;text-transform:uppercase;color:#5A6170">Foram à loja</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:88px;font-weight:800;line-height:1.0">1.652</p>
+<div style="display:flex"><div style="width:42px;height:16px;background:#2456B8;border-radius:8px"></div></div>
+<p style="font-size:24px;color:#5A6170"><b style="color:#15191F">85,3%</b> dos agendados · CRM</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-radius:16px;padding:32px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;text-transform:uppercase;color:#5A6170">Nota fiscal</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:88px;font-weight:800;line-height:1.0">1.365</p>
+<div style="display:flex"><div style="width:34px;height:16px;background:#2456B8;border-radius:8px"></div></div>
+<p style="font-size:24px;color:#5A6170"><b style="color:#15191F">82,6%</b> de quem foi · Proteus</p>
+</div>
+</div>
+<div style="display:flex;gap:64px;align-items:baseline">
+<p style="font-size:44px;line-height:1.2"><b style="color:#2456B8">10,3%</b> ponta a ponta</p>
+<p style="font-size:44px;line-height:1.2"><b style="color:#2456B8">R$ 55,92</b> de mídia por venda com nota</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Mídia: R$ 76.334 (Meta Ads + Google Ads). Venda = telefone do agendamento com nota emitida no Proteus no mesmo mês.</p>
+<aside>13.200 atendimentos na Omnichat, 1.937 agendamentos na planilha do CRM, 1.652 compareceram, 1.365 têm nota fiscal no Proteus. As barras mostram o tamanho de cada etapa em relação ao topo. Atenção: 84 agendados com nota estão marcados como "não foi à loja" na planilha, por isso a última etapa não é subconjunto exato da anterior.</aside>
+</section>
+<section id="mes" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Mês a mês</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">Agenda → venda subiu de 67,8% em julho para 71,3% em outubro</h2>
+</div>
+<table style="font-size:28px;font-family:'IBM Plex Sans', Arial, sans-serif;color:#15191F">
+<tr><th style="width:11%;text-align:left">Mês</th><th style="width:10%;text-align:right">Atendim.</th><th style="width:10%;text-align:right">Agendam.</th><th style="width:10%;text-align:right">Atend → agenda</th><th style="width:10%;text-align:right">Foi à loja</th><th style="width:10%;text-align:right">Loja → venda</th><th style="width:10%;text-align:right">Agenda → venda</th><th style="width:9%;text-align:right">Com nota</th><th style="width:10%;text-align:right">Mídia / venda</th><th style="width:10%;text-align:right">Ticket</th></tr>
+<tr><td>Julho</td><td style="text-align:right">3.134</td><td style="text-align:right">528</td><td style="text-align:right">16,8%</td><td style="text-align:right">88,3%</td><td style="text-align:right">76,8%</td><td style="text-align:right">67,8%</td><td style="text-align:right">358</td><td style="text-align:right">R$ 54,58</td><td style="text-align:right">R$ 2.006</td></tr>
+<tr><td>Agosto</td><td style="text-align:right">4.009</td><td style="text-align:right">509</td><td style="text-align:right">12,7%</td><td style="text-align:right">84,9%</td><td style="text-align:right">86,8%</td><td style="text-align:right">73,7%</td><td style="text-align:right">375</td><td style="text-align:right">R$ 54,23</td><td style="text-align:right">R$ 1.684</td></tr>
+<tr><td>Setembro</td><td style="text-align:right">2.679</td><td style="text-align:right">440</td><td style="text-align:right">16,4%</td><td style="text-align:right">84,8%</td><td style="text-align:right">81,5%</td><td style="text-align:right">69,1%</td><td style="text-align:right">304</td><td style="text-align:right">R$ 61,89</td><td style="text-align:right">R$ 1.940</td></tr>
+<tr><td>Outubro</td><td style="text-align:right">3.378</td><td style="text-align:right">460</td><td style="text-align:right">13,6%</td><td style="text-align:right">82,8%</td><td style="text-align:right">86,1%</td><td style="text-align:right">71,3%</td><td style="text-align:right">328</td><td style="text-align:right">R$ 53,79</td><td style="text-align:right">R$ 1.978</td></tr>
+<tr style="background:#E9E6DD"><td><b>Jul–Out</b></td><td style="text-align:right"><b>13.200</b></td><td style="text-align:right"><b>1.937</b></td><td style="text-align:right"><b>14,7%</b></td><td style="text-align:right"><b>85,3%</b></td><td style="text-align:right"><b>82,6%</b></td><td style="text-align:right"><b>70,5%</b></td><td style="text-align:right"><b>1.365</b></td><td style="text-align:right"><b>R$ 55,92</b></td><td style="text-align:right"><b>R$ 1.896</b></td></tr>
+</table>
+<p style="font-size:28px;color:#5A6170">Melhor conversão de agenda: <b style="color:#15191F">agosto, 73,7%</b>. Menor custo de mídia por venda: <b style="color:#15191F">outubro, R$ 53,79</b>. Setembro foi o mês mais caro.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Ticket = faturamento no Proteus dos clientes com nota ÷ número de clientes.</p>
+<aside>Agosto teve o maior volume de atendimentos (4.009), mas a menor taxa de atendimento → agenda (12,7%). Setembro teve o menor volume de atendimentos e o maior custo por venda (R$ 61,89).</aside>
+</section>
+<section id="loja" data-transition="fade" style="background:#2456B8;color:#F6F5F1;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;justify-content:space-between">
+<div style="display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#D6E2F7">Julho → outubro</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:96px;font-weight:800;line-height:1.05;width:1500px">A melhora veio de dentro da loja</h2>
+</div>
+<div style="display:flex;gap:96px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:32px;color:#D6E2F7">Agendados que foram à loja</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:88px;font-weight:800;line-height:1.0;white-space:nowrap">88,3% → 82,8%</p>
+<p style="font-size:32px;color:#D6E2F7">−5,4 p.p. · menos gente compareceu</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:32px;color:#D6E2F7">Quem foi e saiu com nota</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:88px;font-weight:800;line-height:1.0;white-space:nowrap">76,8% → 86,1%</p>
+<p style="font-size:32px;color:#D6E2F7">+9,3 p.p. · quem foi comprou mais</p>
+</div>
+</div>
+<p style="font-size:32px;color:#F6F5F1">Resultado: agenda → venda passou de 67,8% para 71,3% (+3,5 p.p.), mesmo com menos agendamentos (528 → 460).</p>
+<aside>A conversão de agenda para venda melhorou porque a venda dentro da loja melhorou muito, mais do que compensando a queda de comparecimento. O comparecimento é o ponto a observar: caiu em todos os meses desde julho.</aside>
+</section>
+<section id="vaza" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Onde o funil vaza</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">85,3% dos atendimentos param antes do agendamento</h2>
+</div>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-radius:16px;padding:40px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:96px;font-weight:800;line-height:1.0;color:#B4501A">11.263</p>
+<p style="font-size:32px;line-height:1.3">atendimentos <b>não viraram agendamento</b></p>
+<p style="font-size:24px;color:#5A6170">85,3% do topo</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-radius:16px;padding:40px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:96px;font-weight:800;line-height:1.0;color:#B4501A">285</p>
+<p style="font-size:32px;line-height:1.3">agendaram e <b>não foram à loja</b></p>
+<p style="font-size:24px;color:#5A6170">14,7% de no-show</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-radius:16px;padding:40px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:96px;font-weight:800;line-height:1.0;color:#B4501A">371</p>
+<p style="font-size:32px;line-height:1.3">foram à loja e <b>saíram sem nota</b></p>
+<p style="font-size:24px;color:#5A6170">22,5% de quem compareceu</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4;color:#3A404C;width:1500px">Em volume, o gargalo é o topo. Em dinheiro por esforço, é a loja: os 371 já estavam fisicamente lá, com orçamento na mão.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Julho a outubro de 2026 · Omnichat, planilha do CRM e Proteus</p>
+<aside>Depois do agendamento o funil segura: 85,3% comparecem e 82,6% de quem comparece sai com nota. O problema principal é chegar ao agendamento.</aside>
+</section>
+<section id="dinheiro" data-transition="fade" style="background:#ECEAE3;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Em dinheiro</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">Os clientes do funil faturaram R$ 2,56 milhões</h2>
+</div>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;border-top:4px solid #2456B8;padding:24px 0 0 0">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:60px;font-weight:800;line-height:1.0;white-space:nowrap">1.348</p>
+<p style="font-size:28px;color:#3A404C">clientes com nota fiscal</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;border-top:4px solid #2456B8;padding:24px 0 0 0">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:60px;font-weight:800;line-height:1.0;white-space:nowrap">R$ 1.896</p>
+<p style="font-size:28px;color:#3A404C">ticket médio</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;border-top:4px solid #2456B8;padding:24px 0 0 0">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:60px;font-weight:800;line-height:1.0;white-space:nowrap">R$ 76,3 mil</p>
+<p style="font-size:28px;color:#3A404C">de mídia no período</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;border-top:4px solid #B4501A;padding:24px 0 0 0">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:60px;font-weight:800;line-height:1.0;white-space:nowrap;color:#B4501A">6,6%</p>
+<p style="font-size:28px;color:#3A404C">do faturamento da rede</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4;color:#3A404C;width:1500px">A rede faturou R$ 38,96 milhões de julho a outubro. O funil do CRM é uma fatia pequena do caixa — e é a fatia que dá para medir do primeiro contato até a nota.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Faturamento = soma das notas no Proteus dos telefones agendados, no mês do agendamento.</p>
+<aside>Faturamento por mês: julho R$ 718 mil, agosto R$ 623 mil, setembro R$ 578 mil, outubro R$ 637 mil. Faturamento da rede: julho R$ 10,50 mi, agosto R$ 9,43 mi, setembro R$ 9,29 mi, outubro R$ 9,75 mi.</aside>
+</section>
+<section id="kanban" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">As seis etapas da Omnichat</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1">O kanban registra 674 agendamentos. A planilha registra 1.937.</h2>
+</div>
+<div style="display:flex;gap:64px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;gap:24px;align-items:center"><p style="width:300px;font-size:26px">Conexão</p><div style="width:600px;height:28px;background:#9CC4EE;border-radius:4px"></div><p style="font-size:26px"><b>5.299</b> · 40,1%</p></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:300px;font-size:26px">Orçamento enviado</p><div style="width:399px;height:28px;background:#6AA6E3;border-radius:4px"></div><p style="font-size:26px"><b>3.521</b> · 26,7%</p></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:300px;font-size:26px">Em negociação</p><div style="width:114px;height:28px;background:#4A90D9;border-radius:4px"></div><p style="font-size:26px"><b>1.010</b> · 7,7%</p></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:300px;font-size:26px">Agendamento</p><div style="width:76px;height:28px;background:#2456B8;border-radius:4px"></div><p style="font-size:26px"><b>674</b> · 5,1%</p></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:300px;font-size:26px">Venda realizada</p><div style="width:50px;height:28px;background:#1A3F87;border-radius:4px"></div><p style="font-size:26px"><b>444</b> · 3,4%</p></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:300px;font-size:26px">Perdido</p><div style="width:255px;height:28px;background:#B4501A;border-radius:4px"></div><p style="font-size:26px"><b>2.252</b> · 17,1%</p></div>
+</div>
+<div style="width:420px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:800;line-height:1.0;color:#B4501A">34,8%</p><p style="font-size:26px;color:#3A404C">dos agendamentos reais aparecem no kanban</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><p style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:800;line-height:1.0;color:#B4501A">32,5%</p><p style="font-size:26px;color:#3A404C">das vendas com nota aparecem como “Venda realizada”</p></div>
+</div>
+</div>
+<p style="font-size:28px;line-height:1.4;color:#3A404C">A contagem de conversas é confiável; a classificação por etapa, não. A distribuição mede o preenchimento do kanban, não o avanço do cliente.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">13.200 atendimentos = soma das seis etapas, jul–out. Classificação: julho em 17/09, agosto a outubro em 05/11/2026.</p>
+<aside>Conexão (5.299) e Perdido (2.252) somam 57,2% do período. Quanto disso é lead frio de verdade e quanto é conversa que ninguém moveu de coluna, os dados não separam.</aside>
+</section>
+<section id="historico" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Volume de agendamento contra anos anteriores</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">Quase 50% mais agendamentos que em 2024</h2>
+</div>
+<div style="display:flex;gap:80px;align-items:center">
+<div style="width:460px;display:flex;flex-direction:column;gap:16px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:120px;font-weight:800;line-height:1.0;color:#2456B8">+48,9%</p>
+<p style="font-size:32px;line-height:1.35;color:#3A404C"><b style="color:#15191F">1.945</b> agendamentos de julho a outubro/2026, contra 1.306 no mesmo período de 2024</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;gap:24px;align-items:center"><p style="width:110px;font-size:28px;font-weight:600">Jul</p><div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:16px;align-items:center"><div style="width:501px;height:20px;background:#C9C5B9;border-radius:3px"></div><p style="font-size:24px;color:#5A6170">381 · 2024</p></div><div style="display:flex;gap:16px;align-items:center"><div style="width:537px;height:20px;background:#8E99AB;border-radius:3px"></div><p style="font-size:24px;color:#5A6170">408 · 2025</p></div><div style="display:flex;gap:16px;align-items:center"><div style="width:700px;height:20px;background:#2456B8;border-radius:3px"></div><p style="font-size:24px"><b>532</b> · 2026</p></div></div></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:110px;font-size:28px;font-weight:600">Ago</p><div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:16px;align-items:center"><div style="width:430px;height:20px;background:#C9C5B9;border-radius:3px"></div><p style="font-size:24px;color:#5A6170">327 · 2024</p></div><div style="display:flex;gap:16px;align-items:center"><div style="width:497px;height:20px;background:#8E99AB;border-radius:3px"></div><p style="font-size:24px;color:#5A6170">378 · 2025</p></div><div style="display:flex;gap:16px;align-items:center"><div style="width:670px;height:20px;background:#2456B8;border-radius:3px"></div><p style="font-size:24px"><b>509</b> · 2026</p></div></div></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:110px;font-size:28px;font-weight:600">Set</p><div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:16px;align-items:center"><div style="width:391px;height:20px;background:#C9C5B9;border-radius:3px"></div><p style="font-size:24px;color:#5A6170">297 · 2024</p></div><div style="display:flex;gap:16px;align-items:center"><div style="width:579px;height:20px;background:#2456B8;border-radius:3px"></div><p style="font-size:24px"><b>440</b> · 2026</p></div></div></div>
+<div style="display:flex;gap:24px;align-items:center"><p style="width:110px;font-size:28px;font-weight:600">Out</p><div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:16px;align-items:center"><div style="width:396px;height:20px;background:#C9C5B9;border-radius:3px"></div><p style="font-size:24px;color:#5A6170">301 · 2024</p></div><div style="display:flex;gap:16px;align-items:center"><div style="width:611px;height:20px;background:#2456B8;border-radius:3px"></div><p style="font-size:24px"><b>464</b> · 2026</p></div></div></div>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Base histórica (aba Página12) vai até ago/2025: setembro e outubro só comparam com 2024. Só o volume é comparável — não a conversão.</p>
+<aside>Contra 2025, onde existe base: julho +30,4% (532 contra 408) e agosto +34,7% (509 contra 378). Contra 2024, cada mês ficou entre +40% e +56%.</aside>
+</section>
+<section id="consultores" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Por consultor · julho a outubro</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1">Vitória converte 91,6% da agenda; o resto do time, entre 55% e 67%</h2>
+</div>
+<table style="font-size:28px;font-family:'IBM Plex Sans', Arial, sans-serif;color:#15191F">
+<tr><th style="width:22%;text-align:left">Consultor</th><th style="width:13%;text-align:right">Agendou</th><th style="width:15%;text-align:right">Foi à loja</th><th style="width:13%;text-align:right">Com nota</th><th style="width:17%;text-align:right">Agenda → venda</th><th style="width:20%;text-align:right">Faturado</th></tr>
+<tr><td>Vitória</td><td style="text-align:right">439</td><td style="text-align:right">437</td><td style="text-align:right">402</td><td style="text-align:right;color:#1A3F87"><b>91,6%</b></td><td style="text-align:right">R$ 799.950</td></tr>
+<tr><td>Thais</td><td style="text-align:right">236</td><td style="text-align:right">200</td><td style="text-align:right">159</td><td style="text-align:right">67,4%</td><td style="text-align:right">R$ 274.827</td></tr>
+<tr><td>Vanessa</td><td style="text-align:right">275</td><td style="text-align:right">232</td><td style="text-align:right">184</td><td style="text-align:right">66,9%</td><td style="text-align:right">R$ 353.061</td></tr>
+<tr><td>Iandra</td><td style="text-align:right">405</td><td style="text-align:right">336</td><td style="text-align:right">267</td><td style="text-align:right">65,9%</td><td style="text-align:right">R$ 495.849</td></tr>
+<tr><td>Tainara</td><td style="text-align:right">183</td><td style="text-align:right">147</td><td style="text-align:right">117</td><td style="text-align:right">63,9%</td><td style="text-align:right">R$ 210.778</td></tr>
+<tr><td>Gabriel</td><td style="text-align:right">177</td><td style="text-align:right">137</td><td style="text-align:right">113</td><td style="text-align:right">63,8%</td><td style="text-align:right">R$ 213.551</td></tr>
+<tr><td>Jhonny</td><td style="text-align:right">218</td><td style="text-align:right">161</td><td style="text-align:right">121</td><td style="text-align:right;color:#B4501A"><b>55,5%</b></td><td style="text-align:right">R$ 205.604</td></tr>
+<tr style="background:#E9E6DD"><td><b>Total</b></td><td style="text-align:right"><b>1.937</b></td><td style="text-align:right"><b>1.652</b></td><td style="text-align:right"><b>1.365</b></td><td style="text-align:right"><b>70,5%</b></td><td style="text-align:right"><b>R$ 2.556.228</b></td></tr>
+</table>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Jhonny e Gabriel entraram em agosto. Claudia (4 agendamentos, só em julho) está no total, fora da tabela.</p>
+<aside>Vitória e Iandra agendam volumes parecidos (439 e 405), mas Vitória converte 91,6% contra 65,9% e fatura R$ 304 mil a mais. Ponto de atenção: Vitória marca 437 de 439 agendados como comparecidos (99,5%), acima de qualquer outro consultor — vale confirmar se o comparecimento dela é preenchido do mesmo jeito que o do resto do time. Em outubro, Thais e Tainara quase não aparecem na planilha (1 e 2 agendamentos).</aside>
+</section>
+<section id="filiais" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:36px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Por filial · julho a outubro</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1">13,4 pontos entre a melhor e a pior filial</h2>
+</div>
+<table style="font-size:26px;font-family:'IBM Plex Sans', Arial, sans-serif;color:#15191F">
+<tr><th style="width:40%;text-align:left">Filial</th><th style="width:15%;text-align:right">Agendamentos</th><th style="width:13%;text-align:right">Com nota</th><th style="width:14%;text-align:right">Conversão</th><th style="width:18%;text-align:right">Faturado</th></tr>
+<tr><td>F11 · Riomar</td><td style="text-align:right">223</td><td style="text-align:right">168</td><td style="text-align:right;color:#1A3F87"><b>75,3%</b></td><td style="text-align:right">R$ 267.451</td></tr>
+<tr><td>F4 · Rogaciano</td><td style="text-align:right">238</td><td style="text-align:right">174</td><td style="text-align:right">73,1%</td><td style="text-align:right">R$ 403.643</td></tr>
+<tr><td>F7 · Messejana</td><td style="text-align:right">202</td><td style="text-align:right">147</td><td style="text-align:right">72,8%</td><td style="text-align:right">R$ 230.569</td></tr>
+<tr><td>F10 · Jóquei</td><td style="text-align:right">174</td><td style="text-align:right">125</td><td style="text-align:right">71,8%</td><td style="text-align:right">R$ 180.522</td></tr>
+<tr><td>F2 · Barão</td><td style="text-align:right">287</td><td style="text-align:right">200</td><td style="text-align:right">69,7%</td><td style="text-align:right">R$ 362.380</td></tr>
+<tr><td>F12 · Meton de Alencar</td><td style="text-align:right">237</td><td style="text-align:right">164</td><td style="text-align:right">69,2%</td><td style="text-align:right">R$ 331.550</td></tr>
+<tr><td>F5 L · Maracanaú (leve)</td><td style="text-align:right">282</td><td style="text-align:right">194</td><td style="text-align:right">68,8%</td><td style="text-align:right">R$ 311.077</td></tr>
+<tr><td>F9 · Terrazo</td><td style="text-align:right">188</td><td style="text-align:right">127</td><td style="text-align:right">67,6%</td><td style="text-align:right">R$ 203.521</td></tr>
+<tr><td>F5 T · Maracanaú (truck)</td><td style="text-align:right">105</td><td style="text-align:right">65</td><td style="text-align:right;color:#B4501A"><b>61,9%</b></td><td style="text-align:right">R$ 264.880</td></tr>
+</table>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Média da rede: 70,5%. F5 (1 agendamento em julho) fica fora por amostra insuficiente.</p>
+<aside>F4 Rogaciano tem o maior faturamento do funil (R$ 404 mil) com conversão acima da média. F5 T (truck) tem a menor conversão, mas ticket alto: R$ 264.880 em 65 clientes. F2 Barão tem o maior volume de agendamentos (287).</aside>
+</section>
+<section id="declarado" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Planilha (declarado) contra Proteus (nota)</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1">R$ 520 mil em vendas declaradas não têm nota fiscal</h2>
+</div>
+<div style="display:flex;gap:64px">
+<div style="width:440px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:6px"><p style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:800;line-height:1.0">1.633</p><p style="font-size:26px;color:#3A404C">vendas declaradas na planilha</p></div>
+<div style="display:flex;flex-direction:column;gap:6px"><p style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:800;line-height:1.0;color:#B4501A">341 · 20,9%</p><p style="font-size:26px;color:#3A404C">sem nenhuma nota para o telefone no mês</p></div>
+<div style="display:flex;flex-direction:column;gap:6px"><p style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:800;line-height:1.0">73</p><p style="font-size:26px;color:#3A404C">o inverso: nota emitida, planilha diz que não vendeu</p></div>
+</div>
+<table style="width:1160px;font-size:26px;font-family:'IBM Plex Sans', Arial, sans-serif;color:#15191F">
+<tr><th style="width:28%;text-align:left">Consultor</th><th style="width:18%;text-align:right">Declarou</th><th style="width:16%;text-align:right">Sem nota</th><th style="width:14%;text-align:right">%</th><th style="width:24%;text-align:right">Valor sem nota</th></tr>
+<tr><td>Iandra</td><td style="text-align:right">334</td><td style="text-align:right">83</td><td style="text-align:right">24,9%</td><td style="text-align:right">R$ 131.936</td></tr>
+<tr><td>Jhonny</td><td style="text-align:right">158</td><td style="text-align:right">54</td><td style="text-align:right;color:#B4501A"><b>34,2%</b></td><td style="text-align:right">R$ 75.937</td></tr>
+<tr><td>Gabriel</td><td style="text-align:right">136</td><td style="text-align:right">38</td><td style="text-align:right">27,9%</td><td style="text-align:right">R$ 75.095</td></tr>
+<tr><td>Vanessa</td><td style="text-align:right">223</td><td style="text-align:right">51</td><td style="text-align:right">22,9%</td><td style="text-align:right">R$ 70.582</td></tr>
+<tr><td>Vitória</td><td style="text-align:right">437</td><td style="text-align:right">35</td><td style="text-align:right;color:#1A3F87"><b>8,0%</b></td><td style="text-align:right">R$ 63.249</td></tr>
+<tr><td>Tainara</td><td style="text-align:right">148</td><td style="text-align:right">38</td><td style="text-align:right">25,7%</td><td style="text-align:right">R$ 59.342</td></tr>
+<tr><td>Thais</td><td style="text-align:right">195</td><td style="text-align:right">42</td><td style="text-align:right">21,5%</td><td style="text-align:right">R$ 44.221</td></tr>
+</table>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Venda sem nota pode ser erro de preenchimento, nota no CPF/telefone de outra pessoa, nota no mês seguinte ou venda que não aconteceu. Os dados não separam os quatro casos.</p>
+<aside>Por mês, valor declarado sem nota: julho R$ 153.949 (101 vendas), agosto R$ 88.513 (85), setembro R$ 166.899 (83), outubro R$ 111.000 (72). Total R$ 520.361. Tabela ordenada por valor sem nota.</aside>
+</section>
+<section id="divergencia" data-transition="fade" style="background:#ECEAE3;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Divergência de valor · planilha contra nota</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1">1 em cada 4 valores da planilha não bate com a nota — mas o total bate</h2>
+</div>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#F6F5F1;border-radius:16px;padding:40px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:800;line-height:1.0;color:#B4501A">251 de 949</p>
+<p style="font-size:28px;line-height:1.35;color:#3A404C">vendas com valor nos dois lados divergem em mais de R$ 1 (26,4%)</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#F6F5F1;border-radius:16px;padding:40px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:800;line-height:1.0">173 · 78</p>
+<p style="font-size:28px;line-height:1.35;color:#3A404C">nota <b>menor</b> que o declarado · nota <b>maior</b> que o declarado</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#F6F5F1;border-radius:16px;padding:40px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:800;line-height:1.0;color:#2456B8">+0,5%</p>
+<p style="font-size:28px;line-height:1.35;color:#3A404C">R$ 1.851.620 declarados contra R$ 1.860.455 faturados</p>
+</div>
+</div>
+<p style="font-size:32px;line-height:1.4;color:#3A404C;width:1500px">É erro de preenchimento linha a linha, não viés: os erros para cima e para baixo se compensam. A nota soma todas as compras do telefone no mês; a planilha costuma registrar só o orçamento fechado na primeira visita.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Por mês, divergentes / com valor: jul 90/310 · ago 41/218 · set 53/213 · out 67/208.</p>
+<aside>Os casos de nota maior que o declarado são explicados em parte por retornos e serviços adicionais no mesmo mês. Os casos de nota menor (173) não têm essa explicação: são o ponto a auditar. A lista nominal dos maiores casos está no HTML da análise.</aside>
+</section>
+<section id="acoes" data-transition="fade" style="background:#F6F5F1;color:#15191F;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#2456B8">Três ações · por R$ recuperável sobre esforço</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">O que fazer agora</h2>
+</div>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-top:6px solid #2456B8;border-radius:12px;padding:36px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.2">1 · Converter quem já está na loja</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:56px;font-weight:800;line-height:1.0;color:#2456B8">≈ R$ 235 mil</p>
+<p style="font-size:26px;line-height:1.4;color:#3A404C">371 clientes foram à loja e saíram sem nota. Fechar um terço deles, ao ticket de R$ 1.896, rende isso no período. Comece pelas filiais F5 T (61,9%) e F9 (67,6%), abaixo da média de 70,5%.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-top:6px solid #2456B8;border-radius:12px;padding:36px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.2">2 · Subir atendimento → agenda</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:56px;font-weight:800;line-height:1.0;color:#2456B8">≈ R$ 176 mil</p>
+<p style="font-size:26px;line-height:1.4;color:#3A404C">por ponto percentual a mais nos 14,7%: 132 agendamentos e 93 vendas no período. Depende de tempo de primeira resposta, script e de trabalhar os 5.299 chats parados em “Conexão”.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FDFCF9;border:1px solid #DDDAD0;border-top:6px solid #B4501A;border-radius:12px;padding:36px">
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:32px;font-weight:700;line-height:1.2">3 · Fechar os furos de registro</p>
+<p style="font-family:'Archivo', Arial, sans-serif;font-size:56px;font-weight:800;line-height:1.0;color:#B4501A">84% × 70%</p>
+<p style="font-size:26px;line-height:1.4;color:#3A404C">A planilha diz que 84,3% da agenda comprou; o Proteus mostra 70,5%. Exigir o número da OS para marcar venda e manter o kanban da Omnichat atualizado, que hoje registra só 1 em cada 3 agendamentos.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#5A6170">Valores estimados com a conversão e o ticket médio de julho a outubro/2026.</p>
+<aside>Ação 1 tem o menor esforço por real: o cliente já está na loja com orçamento na mão. Ação 2 é a maior massa do funil, mas exige mais mudança de processo. Ação 3 não gera receita direta, mas sem ela nenhuma taxa intermediária do funil é auditável.</aside>
+</section>
+<section id="metodo" data-transition="fade" style="background:#15191F;color:#F6F5F1;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'IBM Plex Mono', 'Courier New', monospace;font-size:24px;letter-spacing:3px;text-transform:uppercase;color:#7FA8E8">Metodologia</p>
+<h2 style="font-family:'Archivo', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1">Fontes e ressalvas</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px 64px">
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Archivo', Arial, sans-serif;font-size:32px;font-weight:700">Topo · Omnichat</h3><p style="font-size:26px;line-height:1.4;color:#C9CED8">Atendimentos = soma das seis etapas do funil no mês, extraída do BI. Mídia: Meta Ads e Google Ads via Windsor.ai.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Archivo', Arial, sans-serif;font-size:32px;font-weight:700">Meio · planilha do CRM</h3><p style="font-size:26px;line-height:1.4;color:#C9CED8">Compilado de Agendamentos de cada mês, preenchido à mão. Agendado = linha com data de agendamento.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Archivo', Arial, sans-serif;font-size:32px;font-weight:700">Fundo · Proteus</h3><p style="font-size:26px;line-height:1.4;color:#C9CED8">Relatório de vendas de cada mês (01 ao último dia). Venda = telefone com nota emitida no mesmo mês, casado por DDD + 8 últimos dígitos.</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Archivo', Arial, sans-serif;font-size:32px;font-weight:700">Ressalvas</h3><p style="font-size:26px;line-height:1.4;color:#C9CED8">Julho repete a análise de 17/09 (a planilha de julho foi reaproveitada para outubro). O cruzamento CRM × Omnichat linha a linha só existe para julho.</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#8A92A0">Análise de 05/11/2026 · Gerardo Bastos · julho a outubro de 2026</p>
+<aside>Em setembro, Meta e Google atribuem mais conversões (2.710) do que a Omnichat recebeu de atendimentos (2.679), porque cada plataforma conta por regras próprias; nesse mês a fatia vinda de anúncio não deve ser lida como recorte do total. Agendamentos marcados no fim do mês com visita no mês seguinte aparecem sem nota no mês do agendamento. A versão interativa, com filtro por mês, está no HTML da análise.</aside>
+</section>
+</div></div>
+<div id="bar"><button id="prev" aria-label="Slide anterior">←</button><span id="count"></span><button id="next" aria-label="Próximo slide">→</button><button id="fs">Tela cheia</button></div>
+<script>
+(function(){
+  var S=[].slice.call(document.querySelectorAll('#deck>section')),i=0,deck=document.getElementById('deck');
+  function fit(){var k=Math.min(innerWidth/1920,innerHeight/1080);deck.style.transform='scale('+k+')';}
+  function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,j){s.classList.toggle('on',j===i);});
+    document.getElementById('count').textContent=(i+1)+' / '+S.length;try{history.replaceState(null,'','#'+(i+1));}catch(e){}}
+  addEventListener('resize',fit);
+  addEventListener('keydown',function(e){
+    if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>=0){e.preventDefault();go(i+1);}
+    else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){e.preventDefault();go(i-1);}
+    else if(e.key==='Home')go(0); else if(e.key==='End')go(S.length-1);
+    else if(e.key==='f'||e.key==='F')fs();
+  });
+  function fs(){if(document.fullscreenElement)document.exitFullscreen();else if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen();}
+  document.getElementById('prev').onclick=function(){go(i-1);};
+  document.getElementById('next').onclick=function(){go(i+1);};
+  document.getElementById('fs').onclick=fs;
+  document.getElementById('stage').addEventListener('click',function(e){go(e.clientX<innerWidth/3?i-1:i+1);});
+  fit();go((parseInt((location.hash||'').slice(1),10)||1)-1);
+})();
+</script></body></html>
