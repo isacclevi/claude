@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Funil Lead → Agenda → Venda · Jul–Out</title>
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    color-scheme: light;
+    --page:#f9f9f7;
+    --surface:#fcfcfb;
+    --surface-raised:#ffffff;
+    --text-primary:#0b0b0b;
+    --text-secondary:#52514e;
+    --text-muted:#898781;
+    --gridline:#e1e0d9;
+    --baseline:#c3c2b7;
+    --border:rgba(11,11,11,0.10);
+
+    --series-claudia:#2a78d6;
+    --series-iandra:#eb6834;
+    --series-tainara:#1baf7a;
+    --series-thais:#eda100;
+    --series-vanessa:#e87ba4;
+    --series-vitoria:#008300;
+
+    /* rampa sequencial do funil: mais fundo = mais escuro */
+    --stage-0:#9cc4ee;
+    --stage-1:#4a90d9;
+    --stage-2:#2a78d6;
+    --stage-3:#1a5aa8;
+    --stage-ink:#ffffff;
+    --stage-ghost:rgba(11,11,11,0.06);
+
+    --good:#0ca30c;
+    --critical:#d03b3b;
+    --warning:#fab219;
+    --good-wash: rgba(12,163,12,0.10);
+    --critical-wash: rgba(208,59,59,0.08);
+    --warning-wash: rgba(250,178,25,0.12);
+
+    --font-display:"Archivo", system-ui, sans-serif;
+    --font-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono:"IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --page:#0d0d0d;
+      --surface:#1a1a19;
+      --surface-raised:#212120;
+      --text-primary:#ffffff;
+      --text-secondary:#c3c2b7;
+      --text-muted:#898781;
+      --gridline:#2c2c2a;
+      --baseline:#383835;
+      --border:rgba(255,255,255,0.10);
+
+      --series-claudia:#3987e5;
+      --series-iandra:#d95926;
+      --series-tainara:#199e70;
+      --series-thais:#c98500;
+      --series-vanessa:#d55181;
+      --series-vitoria:#008300;
+
+      --stage-0:#9cc4ee;
+      --stage-1:#4a90d9;
+      --stage-2:#2a78d6;
+      --stage-3:#1f63b8;
+      --stage-ghost:rgba(255,255,255,0.07);
+
+      --good-wash: rgba(12,163,12,0.16);
+      --critical-wash: rgba(230,103,103,0.14);
+      --warning-wash: rgba(250,178,25,0.16);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --page:#0d0d0d;
+    --surface:#1a1a19;
+    --surface-raised:#212120;
+    --text-primary:#ffffff;
+    --text-secondary:#c3c2b7;
+    --text-muted:#898781;
+    --gridline:#2c2c2a;
+    --baseline:#383835;
+    --border:rgba(255,255,255,0.10);
+
+    --series-claudia:#3987e5;
+    --series-iandra:#d95926;
+    --series-tainara:#199e70;
+    --series-thais:#c98500;
+    --series-vanessa:#d55181;
+    --series-vitoria:#008300;
+
+    --stage-0:#9cc4ee;
+    --stage-1:#4a90d9;
+    --stage-2:#2a78d6;
+    --stage-3:#1f63b8;
+    --stage-ghost:rgba(255,255,255,0.07);
+
+    --good-wash: rgba(12,163,12,0.16);
+    --critical-wash: rgba(230,103,103,0.14);
+    --warning-wash: rgba(250,178,25,0.16);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--page);
+    color:var(--text-primary);
+    font-family:var(--font-body);
+    margin:0;
+    padding-inline:20px;
+    padding-block:48px;
+  }
+  .sheet{max-width:880px; margin:0 auto; display:flex; flex-direction:column; position:relative;}
+
+  /* ---- header ---- */
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--good);flex:none;}
+  h1{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:clamp(29px, 6.4vw, 48px);
+    line-height:1.05;
+    overflow-wrap:break-word;
+    letter-spacing:-.01em;
+    margin:10px 0 6px;
+    text-wrap:balance;
+  }
+  h1 .arrow{color:var(--series-claudia); padding-inline:.10em;}
+  .subhead{
+    font-size:16px; color:var(--text-secondary); max-width:62ch;
+    line-height:1.55; margin:0 0 32px;
+  }
+  .subhead b{color:var(--text-primary); font-weight:600;}
+
+  section{padding-block:32px; border-top:1px solid var(--gridline);}
+  section:first-of-type{border-top:none; padding-top:0;}
+  .section-label{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--text-muted); margin:0 0 18px;
+  }
+  h2{
+    font-family:var(--font-display); font-weight:700;
+    font-size:22px; line-height:1.2; margin:0 0 10px; letter-spacing:-.01em;
+  }
+  .lede{font-size:15px; color:var(--text-secondary); line-height:1.6; margin:0 0 4px; max-width:70ch;}
+  .lede b{color:var(--text-primary); font-weight:600;}
+  .lede + .lede{margin-top:12px;}
+
+  /* ---- funil (HTML/CSS: rótulos fora da forma, texto não encolhe) ---- */
+  .funnel-wrap{
+    border:1px solid var(--gridline);
+    border-radius:10px;
+    background:var(--surface);
+    padding:20px 18px 6px;
+    margin-top:6px;
+  }
+  .funnel-vis{
+    display:grid;
+    grid-template-columns:186px minmax(0,1fr) 150px;
+    gap:0 14px;
+    align-items:start;
+  }
+  .flabels{display:flex; flex-direction:column;}
+  .flabel{
+    display:flex; flex-direction:column; align-items:flex-end; justify-content:center;
+    text-align:right; gap:2px;
+  }
+  .flabel + .flabel{margin-top:6px;}
+  .flabel.h0{height:104px;}
+  .flabel.h1{height:86px;}
+  .flabel-name{
+    font-size:11.5px; font-weight:600; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--text-secondary); line-height:1.25;
+  }
+  .flabel-src{font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted);}
+  .flabel-vol{
+    font-family:var(--font-display); font-weight:800; font-size:31px; line-height:1;
+    color:var(--text-primary); letter-spacing:-.02em;
+  }
+
+  .funnel-stack{position:relative;}
+  .fband{border-radius:2px;}
+  .fband + .fband{margin-top:6px;}
+  /* larguras proporcionais ao volume: 3.134 / 528 / 466 / 358 */
+  .fband.s0{height:104px; background:var(--stage-0); clip-path:polygon(0 0, 100% 0, 58.42% 100%, 41.58% 100%);}
+  .fband.s1{height:86px;  background:var(--stage-1); clip-path:polygon(41.58% 0, 58.42% 0, 57.43% 100%, 42.57% 100%);}
+  .fband.s2{height:86px;  background:var(--stage-2); clip-path:polygon(42.57% 0, 57.43% 0, 55.71% 100%, 44.29% 100%);}
+  .fband.s3{height:86px;  background:var(--stage-3); clip-path:polygon(44.29% 0, 55.71% 0, 54.85% 100%, 45.15% 100%);}
+
+  .frates{position:relative; height:380px;}
+  .frate{
+    position:absolute; left:0; transform:translateY(-50%);
+    display:flex; align-items:center; gap:8px;
+  }
+  .frate.b0{top:107px;}
+  .frate.b1{top:199px;}
+  .frate.b2{top:291px;}
+  .frate-brace{flex:none; width:20px; height:44px;}
+  .frate-brace path{fill:none; stroke:var(--baseline); stroke-width:1.5;}
+  .frate-val{font-family:var(--font-mono); font-size:16.5px; font-weight:600; color:var(--text-primary); line-height:1.2;}
+  .frate-cap{font-size:11.5px; color:var(--text-muted); display:block; margin-top:1px;}
+
+  .fend{
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 20px;
+    margin-top:16px; padding-top:14px; border-top:1px solid var(--gridline);
+  }
+  .fend-val{font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--text-primary); letter-spacing:-.01em;}
+  .fend-cap{font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);}
+  .fend-sep{font-size:12.5px; color:var(--text-muted);}
+
+  .funnel-caption{
+    font-size:12px; color:var(--text-muted); margin:14px 0 0; line-height:1.5;
+  }
+
+  .funnel-foot{
+    display:flex; gap:8px 22px; flex-wrap:wrap;
+    font-size:12px; color:var(--text-muted);
+    padding:6px 12px 6px; line-height:1.5;
+    border-top:1px solid var(--gridline); margin-top:6px;
+  }
+  .funnel-foot span{position:relative; padding-left:12px;}
+  .funnel-foot span::before{content:"·"; position:absolute; left:2px; color:var(--baseline);}
+
+  /* ---- hero ---- */
+  .hero-row{display:flex; gap:36px; align-items:flex-end; flex-wrap:wrap; margin-bottom:26px;}
+  .hero-figure{
+    font-family:var(--font-display); font-weight:800;
+    font-size:clamp(58px, 12vw, 96px); line-height:.9;
+    color:var(--series-claudia); letter-spacing:-.02em; flex:none;
+  }
+  .hero-caption{font-size:15px; color:var(--text-secondary); line-height:1.5; max-width:36ch; padding-bottom:8px;}
+  .hero-caption b{color:var(--text-primary);}
+
+  /* ---- barras ---- */
+  .chart{display:flex; flex-direction:column; gap:10px;}
+  .bar-row{display:grid; grid-template-columns:92px 1fr 128px; align-items:center; gap:12px;}
+  .bar-name{font-size:13.5px; font-weight:500; color:var(--text-primary); display:flex; align-items:center; gap:8px;}
+  .bar-swatch{width:9px;height:9px;border-radius:50%;flex:none;}
+  .bar-track{position:relative; height:26px; background:var(--surface); border-radius:5px;}
+  .bar-fill{position:absolute; left:0; top:0; bottom:0; border-radius:5px; min-width:5px; cursor:pointer; transition:filter .12s;}
+  .bar-fill:hover, .bar-fill:focus-visible{filter:brightness(1.08);}
+  .bar-value{font-family:var(--font-mono); font-size:13.5px; text-align:right;}
+  .bar-value b{font-size:15px; font-weight:600; color:var(--text-primary);}
+  .bar-value span{color:var(--text-muted); font-size:12px;}
+  .chart.wide .bar-row{grid-template-columns:120px 1fr 132px;}
+  .chart.wide .bar-name{font-size:13px;}
+  .chart-axis{display:grid; grid-template-columns:92px 1fr 128px; gap:12px; margin-top:2px;}
+  .chart-axis .ticks{position:relative; height:14px; font-family:var(--font-mono); font-size:10.5px; color:var(--text-muted);}
+  .chart-axis .ticks span{position:absolute; left:0;}
+  .chart-axis .ticks span:nth-child(2){left:50%; transform:translateX(-50%);}
+  .chart-axis .ticks span:last-child{left:100%; transform:translateX(-100%);}
+  .tooltip{
+    position:absolute; pointer-events:none; background:var(--text-primary); color:var(--page);
+    font-family:var(--font-mono); font-size:11.5px; padding:6px 9px; border-radius:5px;
+    white-space:nowrap; opacity:0; transform:translate(-50%,-8px); transition:opacity .1s; z-index:5;
+  }
+  .tooltip.show{opacity:1;}
+
+  /* ---- tiles ---- */
+  .tiles{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:1px;
+    background:var(--gridline); border:1px solid var(--gridline);
+    border-radius:8px; overflow:hidden;
+  }
+  .tiles.four{grid-template-columns:repeat(4, 1fr);}
+  .tile{background:var(--surface); padding:20px 18px; display:flex; flex-direction:column; gap:6px;}
+  .tile-value{font-family:var(--font-mono); font-weight:600; font-size:27px; letter-spacing:-.01em;}
+  .tile-value.crit{color:var(--critical);}
+  .tile-value.warn{color:#b3790f;}
+  :root:not([data-theme="light"]) .tile-value.warn{color:var(--warning);}
+  :root[data-theme="dark"] .tile-value.warn{color:var(--warning);}
+  .tile-label{font-size:12.5px; color:var(--text-secondary); line-height:1.4;}
+  .tile-label b{color:var(--text-primary); font-weight:600;}
+
+  /* ---- tabela ---- */
+  .table-wrap{overflow-x:auto; border:1px solid var(--gridline); border-radius:8px;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; min-width:580px;}
+  thead th{
+    text-align:left; font-family:var(--font-mono); font-size:11px; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--text-muted); font-weight:500;
+    padding:11px 14px; border-bottom:1px solid var(--gridline); background:var(--surface);
+  }
+  thead th.r{text-align:right;}
+  tbody td{padding:11px 14px; border-bottom:1px solid var(--gridline); color:var(--text-secondary);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody td.num{font-family:var(--font-mono); font-variant-numeric:tabular-nums; text-align:right; color:var(--text-primary);}
+  tbody td.name{color:var(--text-primary); font-weight:500; white-space:nowrap;}
+  tbody tr.total td{background:var(--surface); font-weight:600; color:var(--text-primary);}
+  .pill{display:inline-block; font-family:var(--font-mono); font-size:12px; padding:2px 8px; border-radius:20px;}
+  .pill.bad{background:var(--critical-wash); color:var(--critical);}
+  .pill.ok{background:var(--good-wash); color:var(--good);}
+  .pill.neutral{background:var(--stage-ghost); color:var(--text-primary);}
+  .swatch-inline{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px;vertical-align:baseline;}
+
+  .note{font-size:12.5px; color:var(--text-muted); margin:12px 0 0; line-height:1.6; max-width:78ch;}
+
+  .callout{
+    display:flex; gap:12px; padding:16px 18px; background:var(--warning-wash);
+    border:1px solid var(--gridline); border-radius:8px;
+    font-size:13.5px; color:var(--text-secondary); line-height:1.55;
+  }
+  .callout.neutral{background:var(--surface);}
+  .callout .mark{font-family:var(--font-mono); color:#8a5c0c; font-weight:600; flex:none;}
+  :root:not([data-theme="light"]) .callout .mark{color:var(--warning);}
+  :root[data-theme="dark"] .callout .mark{color:var(--warning);}
+  .callout b{color:var(--text-primary); font-weight:600;}
+
+  /* ---- recomendações ---- */
+  .recs{display:flex; flex-direction:column; gap:1px; background:var(--gridline); border:1px solid var(--gridline); border-radius:8px; overflow:hidden;}
+  .rec{background:var(--surface); padding:18px 20px; display:grid; grid-template-columns:38px 1fr; gap:14px; align-items:start;}
+  .rec-n{
+    font-family:var(--font-display); font-weight:800; font-size:26px;
+    line-height:1; color:var(--series-claudia);
+  }
+  .rec-t{font-size:15px; font-weight:600; color:var(--text-primary); margin:0 0 5px; line-height:1.35;}
+  .rec-d{font-size:13.5px; color:var(--text-secondary); line-height:1.55; margin:0;}
+  .rec-d b{color:var(--text-primary); font-weight:600;}
+
+  footer{
+    padding-top:28px; margin-top:8px; border-top:1px solid var(--gridline);
+    font-size:12px; color:var(--text-muted); line-height:1.7;
+  }
+  footer b{color:var(--text-secondary);}
+
+  @media (max-width:620px){
+    .tiles, .tiles.four{grid-template-columns:1fr 1fr;}
+    .bar-row{grid-template-columns:70px 1fr; row-gap:4px;}
+    .bar-value{grid-column:2/3; text-align:left;}
+    .chart-axis{display:none;}
+    .chart.wide .bar-row{grid-template-columns:1fr;}
+    .hero-row{gap:18px;}
+    .funnel-wrap{padding:16px 12px 6px;}
+    .funnel-vis{grid-template-columns:118px minmax(0,1fr); gap:0 10px;}
+    .flabel-name{font-size:10px; letter-spacing:.03em;}
+    .flabel-vol{font-size:24px;}
+    .flabel-src{font-size:9.5px;}
+    .frates{grid-column:1 / -1; height:auto; display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;}
+    .frate{position:static; transform:none; flex:1 1 138px;}
+    .frate.b0, .frate.b1, .frate.b2{top:auto;}
+    .frate-brace{transform:rotate(-90deg); width:18px; height:34px;}
+    .fend{gap:4px 14px;}
+    .fend-val{font-size:22px;}
+  }
+  @media (max-width:420px){
+    .tiles, .tiles.four{grid-template-columns:1fr;}
+  }
+
+  :root{ --series-jhonny:#7a5af5; --series-gabriel:#0e95ab; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --series-jhonny:#9b82f7; --series-gabriel:#1fb0c7; } }
+  :root[data-theme="dark"]{ --series-jhonny:#9b82f7; --series-gabriel:#1fb0c7; }
+
+  /* ---- filtro de período ---- */
+  .periodbar{
+    position:sticky; top:0; z-index:20; background:var(--page);
+    margin:0 -20px 8px; padding:12px 20px 14px; border-bottom:1px solid var(--gridline);
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .periodbar .plabel{font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted);}
+  .seg{display:inline-flex; flex-wrap:wrap; gap:2px; background:var(--surface); border:1px solid var(--gridline); border-radius:8px; padding:3px;}
+  .seg button{
+    font-family:var(--font-mono); font-size:12.5px; font-weight:500; color:var(--text-secondary);
+    background:transparent; border:0; border-radius:6px; padding:7px 12px; cursor:pointer;
+  }
+  .seg button:hover{color:var(--text-primary);}
+  .seg button[aria-pressed="true"]{background:var(--text-primary); color:var(--page);}
+  .seg button:focus-visible{outline:2px solid var(--series-claudia); outline-offset:1px;}
+
+  /* ---- evolução mês a mês ---- */
+  tbody tr.sel td{background:var(--stage-ghost);}
+  tbody td.num .delta{font-size:11px; color:var(--text-muted); margin-left:4px;}
+  .spark{display:flex; align-items:flex-end; gap:6px; height:84px; margin-top:18px; padding:0 4px; border-bottom:1px solid var(--baseline);}
+  .spark .col{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:6px; min-width:0;}
+  .spark .bar{width:100%; max-width:64px; border-radius:4px 4px 0 0; background:var(--baseline); min-height:3px;}
+  .spark .col.sel .bar{background:var(--series-claudia);}
+  .spark .v{font-family:var(--font-mono); font-size:12px; color:var(--text-primary); font-weight:600;}
+  .spark-lbl{display:flex; gap:6px; padding:6px 4px 0;}
+  .spark-lbl span{flex:1; text-align:center; font-family:var(--font-mono); font-size:11px; color:var(--text-muted);}
+  .muted{color:var(--text-muted);}
+  #evo-body td.num{white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="eyebrow"><span class="dot"></span><span id="eyebrow"></span></div>
+  <h1>Lead<span class="arrow">→</span><wbr>Agenda<span class="arrow">→</span><wbr>Venda</h1>
+  <p class="subhead" id="subhead"></p>
+
+  <div class="periodbar">
+    <span class="plabel">Período</span>
+    <div class="seg" id="seg" role="group" aria-label="Filtrar período"></div>
+  </div>
+
+  <section>
+    <p class="section-label">Funil de visão · volume e taxa de conversão por etapa</p>
+    <div class="funnel-wrap">
+      <div class="funnel-vis">
+        <div class="flabels" aria-hidden="true">
+          <div class="flabel h0"><span class="flabel-name">Atendimentos</span><span class="flabel-src">Omnichat</span><span class="flabel-vol" id="v0"></span></div>
+          <div class="flabel h1"><span class="flabel-name">Agendamentos</span><span class="flabel-src">planilha CRM</span><span class="flabel-vol" id="v1"></span></div>
+          <div class="flabel h1"><span class="flabel-name">Compareceram à loja</span><span class="flabel-src">planilha CRM</span><span class="flabel-vol" id="v2"></span></div>
+          <div class="flabel h1"><span class="flabel-name">Venda com nota fiscal</span><span class="flabel-src">Proteus</span><span class="flabel-vol" id="v3"></span></div>
+        </div>
+        <div class="funnel-stack" role="img" id="fstack">
+          <div class="fband s0" id="b0"></div>
+          <div class="fband s1" id="b1"></div>
+          <div class="fband s2" id="b2"></div>
+          <div class="fband s3" id="b3"></div>
+        </div>
+        <div class="frates">
+          <div class="frate b0"><svg class="frate-brace" viewBox="0 0 20 44" aria-hidden="true"><path d="M 1 2 C 11 2, 11 22, 19 22 C 11 22, 11 42, 1 42"/></svg>
+            <span><span class="frate-val" id="r0"></span><span class="frate-cap">atendimento → agenda</span></span></div>
+          <div class="frate b1"><svg class="frate-brace" viewBox="0 0 20 44" aria-hidden="true"><path d="M 1 2 C 11 2, 11 22, 19 22 C 11 22, 11 42, 1 42"/></svg>
+            <span><span class="frate-val" id="r1"></span><span class="frate-cap">agenda → loja</span></span></div>
+          <div class="frate b2"><svg class="frate-brace" viewBox="0 0 20 44" aria-hidden="true"><path d="M 1 2 C 11 2, 11 22, 19 22 C 11 22, 11 42, 1 42"/></svg>
+            <span><span class="frate-val" id="r2"></span><span class="frate-cap">loja → venda</span></span></div>
+        </div>
+      </div>
+      <div class="fend">
+        <span><span class="fend-val" id="e2e"></span> <span class="fend-cap">atendimento → nota fiscal</span></span>
+        <span class="fend-sep" id="cost"></span>
+      </div>
+      <div class="funnel-foot">
+        <span>Atendimentos = soma das seis etapas do funil da Omnichat no mês (Conexão, Orçamento, Negociação, Agendamento, Venda, Perdido).</span>
+        <span>Agendamento e comparecimento vêm da planilha do CRM, preenchida à mão pelo time.</span>
+        <span>Venda = nota fiscal encontrada no Proteus no mês, casada por telefone.</span>
+      </div>
+    </div>
+    <p class="note" id="note-top"></p>
+    <p class="note" id="note-match"></p>
+  </section>
+
+  <section>
+    <p class="section-label">Mês a mês · julho a outubro</p>
+    <h2 id="evo-h"></h2>
+    <p class="lede" id="evo-l"></p>
+    <div class="spark" id="spark" aria-hidden="true"></div>
+    <div class="spark-lbl" id="spark-lbl" aria-hidden="true"></div>
+    <div class="table-wrap" style="margin-top:22px">
+      <table>
+        <thead><tr><th>Mês</th><th class="r">Atendim.</th><th class="r">Agendam.</th><th class="r">Atend → agenda</th><th class="r">Comparec.</th><th class="r">Loja → venda</th><th class="r">Agenda → venda</th><th class="r">Vendas c/ NF</th><th class="r">Mídia / venda</th><th class="r">Ticket médio</th></tr></thead>
+        <tbody id="evo-body"></tbody>
+      </table>
+    </div>
+    <p class="note">Linha destacada = período selecionado no filtro. As taxas de cada mês usam a mesma régua: atendimentos da Omnichat, agendamentos da planilha do CRM do mês e nota fiscal no Proteus do mês.</p>
+  </section>
+
+  <section>
+    <p class="section-label">Onde o funil vaza</p>
+    <h2 id="leak-h"></h2>
+    <p class="lede" id="leak-l1"></p>
+    <p class="lede" id="leak-l2"></p>
+    <p class="lede" id="leak-l3"></p>
+    <div class="tiles four" style="margin-top:24px" id="leak-tiles"></div>
+  </section>
+
+  <section>
+    <p class="section-label" id="omni-label"></p>
+    <h2 id="omni-h"></h2>
+    <p class="lede" id="omni-l"></p>
+    <div class="chart wide" id="omni-chart" style="margin-top:20px"></div>
+    <p class="note" id="omni-n"></p>
+  </section>
+
+  <section>
+    <p class="section-label" id="hist-label"></p>
+    <div class="hero-row">
+      <div class="hero-figure" id="hist-hero"></div>
+      <div class="hero-caption" id="hist-cap"></div>
+    </div>
+    <div class="chart" id="hist-chart"></div>
+    <p class="note" id="hist-n"></p>
+  </section>
+
+  <section>
+    <p class="section-label">O mesmo funil, por consultor</p>
+    <div class="chart" id="chart"></div>
+    <div class="chart-axis"><div></div><div class="ticks"><span>0%</span><span>50%</span><span>100%</span></div><div></div></div>
+    <div class="tooltip" id="tooltip"></div>
+    <p class="lede" style="margin-top:22px" id="cons-l"></p>
+    <div class="table-wrap" style="margin-top:18px">
+      <table>
+        <thead><tr><th>Consultor</th><th class="r">Agendou</th><th class="r">Compareceu</th><th class="r">Nota fiscal</th><th class="r">Agenda → venda</th><th class="r">Faturado (Proteus)</th></tr></thead>
+        <tbody id="cons-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="cons-n"></p>
+  </section>
+
+  <section>
+    <p class="section-label">O mesmo funil, por filial</p>
+    <p class="lede" id="fil-l"></p>
+    <div class="table-wrap" style="margin-top:18px">
+      <table>
+        <thead><tr><th>Filial</th><th class="r">Agendamentos</th><th class="r">Com nota</th><th class="r">Conversão</th><th class="r">Faturado (Proteus)</th></tr></thead>
+        <tbody id="filial-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="fil-n"></p>
+  </section>
+
+  <section>
+    <p class="section-label">Planilha (autodeclarado) contra Proteus (real)</p>
+    <h2 id="dec-h"></h2>
+    <p class="lede" id="dec-l"></p>
+    <div class="tiles" style="margin-top:22px" id="dec-tiles"></div>
+    <div class="table-wrap" style="margin-top:22px">
+      <table>
+        <thead><tr><th>Consultor</th><th class="r">Declarou venda</th><th class="r">Sem nota</th><th class="r">% sem lastro</th><th class="r">Valor declarado sem nota</th></tr></thead>
+        <tbody id="leak-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="dec-n"></p>
+  </section>
+
+  <section>
+    <p class="section-label">Divergência de valor · planilha contra nota fiscal</p>
+    <p class="lede" id="div-l"></p>
+    <div class="table-wrap" style="margin-top:18px">
+      <table>
+        <thead><tr><th>Cliente</th><th>Consultor</th><th class="r">Planilha</th><th class="r">Proteus</th><th class="r">Diferença</th></tr></thead>
+        <tbody id="divergence-body"></tbody>
+      </table>
+    </div>
+    <p class="note">O valor do Proteus soma todas as notas emitidas para aquele telefone no mês — retornos, serviços adicionais e segundas visitas entram. O valor da planilha costuma refletir o orçamento fechado na primeira passagem. Isso explica parte dos casos em que a nota é maior, mas não os casos em que é menor.</p>
+  </section>
+
+  <section>
+    <p class="section-label">O topo do funil</p>
+    <div class="callout">
+      <span class="mark">!</span>
+      <span>Atendimento não é lead. O topo deste funil é o total de conversas abertas na Omnichat no mês, que inclui orgânico, contato direto e recompra, não só quem veio de anúncio. A planilha do CRM já nasce no agendamento: as linhas dela são contatos que viraram agenda, não o universo de gente que falou com a loja. Por isso a taxa <b>atendimento → agenda</b> mede o aproveitamento de todas as conversas, e não a eficiência da mídia isolada.</span>
+    </div>
+    <div class="callout neutral" style="margin-top:14px">
+      <span class="mark">·</span>
+      <span id="topo-c2"></span>
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Três ações · priorizadas por R$ recuperável sobre esforço de execução</p>
+    <div class="recs" id="recs"></div>
+  </section>
+
+  <footer>
+    <div><b>Metodologia</b> — Topo do funil extraído do BI de Gerardo Bastos (gerardo-bastos.pages.dev), que consome a Omnichat Public API: atendimentos = soma das seis etapas do funil no mês (julho conforme o recorte de 17/09/2026 usado na análise original; agosto a outubro conforme o BI em 05/11/2026 — a classificação por etapa muda quando o time move cards, o total não). Mídia e conversas atribuídas vêm do Windsor.ai — Meta Ads 617702789388368 e Google Ads 862-227-3902. Agendamentos: planilhas “Compilado de Agendamentos - CRM” de cada mês (preenchimento manual do time); base de agendados = linhas com data de agendamento. Vendas: relatório Proteus rfata27 (REL_VENDAS de cada mês, 01 ao último dia), nível de item agregado por telefone; uma linha do CRM conta como venda quando o telefone tem nota emitida no mesmo mês. Telefones normalizados para DDD + 8 dígitos finais, casando formatos com e sem o dígito “9”; a conversão float→texto do telefone no Proteus foi corrigida antes do cruzamento. Divergência de valor = diferença maior que R$ 1,00 entre o valor da planilha e o total de notas do telefone. Série histórica de volume extraída da aba Página12 (jan/2024 a ago/2025).</div>
+    <div style="margin-top:8px;">Julho reproduz os números da análise original de 17/09/2026: a planilha de julho foi reaproveitada pelo time para outubro e os dados brutos de julho não estão mais nela. Agosto a outubro calculados em <span id="gen"></span> a partir das planilhas e relatórios enviados.</div>
+  </footer>
+</div>
+
+<script>
+const RAW = {"generated": "05/11/2026", "m": {"jul": {"linhas": 532, "sem_data": 4, "ag": 528, "loja": 466, "nf": 358, "nf_loja": 349, "nf_naofoi": 9, "dec": 452, "semnf": 101, "perdido": 153949.12, "inverso": 7, "rs": 718203.72, "rede": 10498070.25, "clientes_nf": 358, "both": 354, "comvalor": 310, "diverge": 90, "menor": 60, "maior": 30, "soma_dec": 635483.81, "soma_pr": 643306.84, "crm_sem_chat": 97, "crm_sem_chat_linhas": 532, "etapas": [1054, 732, 469, 189, 143, 547], "cons": [{"name": "VITORIA", "ag": 118, "loja": 116, "nf": 104, "dec": 116, "semnf": 12, "rs": 227357.73, "perdido": 24101.15}, {"name": "THAIS", "ag": 87, "loja": 77, "nf": 59, "dec": 73, "semnf": 15, "rs": 123342.67, "perdido": 8704.22}, {"name": "VANESSA", "ag": 106, "loja": 88, "nf": 70, "dec": 83, "semnf": 17, "rs": 138594.64, "perdido": 22101.75}, {"name": "TAINARA", "ag": 87, "loja": 71, "nf": 51, "dec": 70, "semnf": 20, "rs": 99391.99, "perdido": 40831.82}, {"name": "IANDRA", "ag": 126, "loja": 112, "nf": 72, "dec": 108, "semnf": 37, "rs": 126908.49, "perdido": 58210.18}, {"name": "CLAUDIA", "ag": 4, "loja": 2, "nf": 2, "dec": 2, "semnf": 0, "rs": 2608.2, "perdido": 0}], "fil": [{"name": "F11", "ag": 58, "loja": 0, "nf": 45, "dec": 0, "semnf": 0, "rs": 75704.89, "perdido": 0}, {"name": "F4", "ag": 58, "loja": 0, "nf": 43, "dec": 0, "semnf": 0, "rs": 115009.39, "perdido": 0}, {"name": "F7", "ag": 48, "loja": 0, "nf": 34, "dec": 0, "semnf": 0, "rs": 51108.33, "perdido": 0}, {"name": "F10", "ag": 70, "loja": 0, "nf": 49, "dec": 0, "semnf": 0, "rs": 71589.57, "perdido": 0}, {"name": "F5 L", "ag": 70, "loja": 0, "nf": 49, "dec": 0, "semnf": 0, "rs": 71234.99, "perdido": 0}, {"name": "F12", "ag": 68, "loja": 0, "nf": 45, "dec": 0, "semnf": 0, "rs": 105615.33, "perdido": 0}, {"name": "F2", "ag": 78, "loja": 0, "nf": 49, "dec": 0, "semnf": 0, "rs": 135399.15, "perdido": 0}, {"name": "F9", "ag": 59, "loja": 0, "nf": 33, "dec": 0, "semnf": 0, "rs": 55836.18, "perdido": 0}, {"name": "F5 T", "ag": 18, "loja": 0, "nf": 10, "dec": 0, "semnf": 0, "rs": 36070.71, "perdido": 0}, {"name": "F5", "ag": 1, "loja": 0, "nf": 1, "dec": 0, "semnf": 0, "rs": 635.18, "perdido": 0}], "top": [{"name": "Gustavo", "cons": "VANESSA", "sheet": 5509.39, "proteus": 14790.34}, {"name": "Luiz Alberto Barbosa Barros", "cons": "THAIS", "sheet": 8000, "proteus": 16000}, {"name": "Raimundo Nonato", "cons": "IANDRA", "sheet": 49, "proteus": 3592.92}, {"name": "Dagoberto da Rocha Façanha Neto", "cons": "THAIS", "sheet": 7854.16, "proteus": 5525.62}, {"name": "Paulo Cesar Monteiro Nunes", "cons": "VITORIA", "sheet": 1344.43, "proteus": 3498.8}, {"name": "Adriano Pinheiro dos Santos", "cons": "THAIS", "sheet": 7970.1, "proteus": 5900}, {"name": "Ildefonso Canuto", "cons": "VITORIA", "sheet": 1575.84, "proteus": 3575.84}, {"name": "Fabiana Pereira dos Santos", "cons": "VITORIA", "sheet": 12882, "proteus": 11146.72}], "label": "Julho", "short": "Jul", "range": "01/07 a 31/07", "notas": 5818, "h2024": 381, "h2025": 408, "atend": 3134, "meta_spend": 11344.51, "g_spend": 8195.17, "meta_conv": 1371, "g_conv": 334.0}, "ago": {"linhas": 509, "sem_data": 0, "ag": 509, "loja": 432, "nf": 375, "nf_loja": 343, "nf_naofoi": 32, "dec": 434, "semnf": 85, "perdido": 88512.96, "inverso": 26, "rs": 623047.09, "rede": 9432081.61, "clientes_nf": 370, "both": 345, "comvalor": 218, "diverge": 41, "menor": 24, "maior": 17, "soma_dec": 390968.52, "soma_pr": 398297.46, "top": [{"name": "Frank Alencar", "cons": "JHONNY", "sheet": 1549.72, "proteus": 7203.47}, {"name": "Weissllaumy Doylly Bessa Souza", "cons": "VITORIA", "sheet": 1316.0, "proteus": 3579.32}, {"name": "Adriano G Arruda", "cons": "VANESSA", "sheet": 2667.08, "proteus": 1283.3}, {"name": "Francisca Do Socorro Bessa Oliveira", "cons": "THAIS", "sheet": 5131.0, "proteus": 3772.59}, {"name": "Bernardo Amaral Gurgel", "cons": "VANESSA", "sheet": 1691.05, "proteus": 2739.57}, {"name": "Lauro Milton", "cons": "VANESSA", "sheet": 1748.0, "proteus": 708.1}, {"name": "Pedro Camurça", "cons": "VITORIA", "sheet": 1626.3, "proteus": 2637.46}, {"name": "Silvana Abreu Lima", "cons": "VITORIA", "sheet": 3420.28, "proteus": 4420.28}], "cons": [{"name": "VITORIA", "ag": 108, "loja": 108, "nf": 103, "dec": 108, "semnf": 5, "rs": 192824.08, "perdido": 3355.33}, {"name": "IANDRA", "ag": 99, "loja": 74, "nf": 64, "dec": 75, "semnf": 18, "rs": 82194.21, "perdido": 21980.89}, {"name": "VANESSA", "ag": 76, "loja": 64, "nf": 50, "dec": 62, "semnf": 17, "rs": 84671.46, "perdido": 17419.85}, {"name": "THAIS", "ag": 74, "loja": 67, "nf": 55, "dec": 68, "semnf": 14, "rs": 82473.67, "perdido": 12491.43}, {"name": "TAINARA", "ag": 56, "loja": 44, "nf": 42, "dec": 46, "semnf": 9, "rs": 65383.82, "perdido": 7361.61}, {"name": "JHONNY", "ag": 49, "loja": 42, "nf": 32, "dec": 42, "semnf": 13, "rs": 59376.63, "perdido": 16272.84}, {"name": "GABRIEL", "ag": 47, "loja": 33, "nf": 29, "dec": 33, "semnf": 9, "rs": 56123.22, "perdido": 9631.01}], "fil": [{"name": "F5 L", "ag": 84, "loja": 62, "nf": 61, "dec": 69, "semnf": 14, "rs": 88503.91, "perdido": 20420.28}, {"name": "F4", "ag": 72, "loja": 61, "nf": 56, "dec": 61, "semnf": 10, "rs": 109156.78, "perdido": 14062.52}, {"name": "F2", "ag": 68, "loja": 57, "nf": 49, "dec": 56, "semnf": 10, "rs": 67223.22, "perdido": 0.0}, {"name": "F11", "ag": 57, "loja": 48, "nf": 43, "dec": 47, "semnf": 8, "rs": 69174.08, "perdido": 5098.0}, {"name": "F10", "ag": 56, "loja": 52, "nf": 44, "dec": 52, "semnf": 9, "rs": 66265.16, "perdido": 11510.3}, {"name": "F7", "ag": 54, "loja": 53, "nf": 41, "dec": 52, "semnf": 11, "rs": 51674.94, "perdido": 0.0}, {"name": "F9", "ag": 51, "loja": 44, "nf": 36, "dec": 43, "semnf": 11, "rs": 47120.08, "perdido": 21548.15}, {"name": "F12", "ag": 47, "loja": 35, "nf": 30, "dec": 34, "semnf": 7, "rs": 62694.42, "perdido": 8761.69}, {"name": "F5 T", "ag": 20, "loja": 20, "nf": 15, "dec": 20, "semnf": 5, "rs": 61234.5, "perdido": 7112.02}], "etapas": [1974, 871, 224, 176, 132, 632], "crm_sem_chat": null, "crm_sem_chat_linhas": null, "label": "Agosto", "short": "Ago", "range": "01/08 a 31/08", "notas": 5355, "h2024": 327, "h2025": 378, "atend": 4009, "meta_spend": 12178.11, "g_spend": 8157.64, "meta_conv": 1693, "g_conv": 781.0}, "set": {"linhas": 440, "sem_data": 0, "ag": 440, "loja": 373, "nf": 304, "nf_loja": 286, "nf_naofoi": 18, "dec": 370, "semnf": 83, "perdido": 166898.87, "inverso": 17, "rs": 578138.54, "rede": 9286363.24, "clientes_nf": 298, "both": 282, "comvalor": 213, "diverge": 53, "menor": 37, "maior": 16, "soma_dec": 415673.03, "soma_pr": 413649.78, "top": [{"name": "Charles Henrique Silva Ferreira", "cons": "TAINARA", "sheet": 3697.88, "proteus": 154.0}, {"name": "F H Lima Feitosa", "cons": "VITORIA", "sheet": 7380.0, "proteus": 10780.0}, {"name": "Alex Rodrigues Pimentel", "cons": "VITORIA", "sheet": 1358.0, "proteus": 4254.0}, {"name": "Raimundo Silva( Lara Aline Sousa Rocha)", "cons": "IANDRA", "sheet": 1457.12, "proteus": 4150.0}, {"name": "Rafael Mesquita Costa", "cons": "VITORIA", "sheet": 5160.0, "proteus": 2794.0}, {"name": "Jaciara Souza Gomes", "cons": "VITORIA", "sheet": 925.04, "proteus": 3223.61}, {"name": "Francisco Mateus Dos Anjos Silva", "cons": "VITORIA", "sheet": 2400.0, "proteus": 113.33}, {"name": "Biotrends Solucoes Biotecnologicas Ltda", "cons": "THAIS", "sheet": 2286.01, "proteus": 4429.3}], "cons": [{"name": "VITORIA", "ag": 100, "loja": 100, "nf": 90, "dec": 100, "semnf": 10, "rs": 170618.29, "perdido": 12339.92}, {"name": "IANDRA", "ag": 91, "loja": 75, "nf": 65, "dec": 76, "semnf": 15, "rs": 159834.41, "perdido": 43298.04}, {"name": "JHONNY", "ag": 77, "loja": 61, "nf": 39, "dec": 59, "semnf": 23, "rs": 60563.55, "perdido": 41365.19}, {"name": "THAIS", "ag": 74, "loja": 55, "nf": 44, "dec": 53, "semnf": 13, "rs": 63635.96, "perdido": 23025.62}, {"name": "GABRIEL", "ag": 60, "loja": 51, "nf": 43, "dec": 51, "semnf": 13, "rs": 78864.92, "perdido": 35721.61}, {"name": "TAINARA", "ag": 38, "loja": 31, "nf": 23, "dec": 31, "semnf": 9, "rs": 44621.41, "perdido": 11148.49}], "fil": [{"name": "F2", "ag": 61, "loja": 54, "nf": 45, "dec": 54, "semnf": 13, "rs": 76722.74, "perdido": 34733.81}, {"name": "F5 L", "ag": 61, "loja": 47, "nf": 41, "dec": 52, "semnf": 11, "rs": 83141.07, "perdido": 16230.6}, {"name": "F12", "ag": 51, "loja": 45, "nf": 37, "dec": 46, "semnf": 11, "rs": 70210.92, "perdido": 14294.02}, {"name": "F11", "ag": 49, "loja": 45, "nf": 37, "dec": 44, "semnf": 8, "rs": 64052.42, "perdido": 7409.5}, {"name": "F7", "ag": 49, "loja": 42, "nf": 33, "dec": 40, "semnf": 8, "rs": 63186.74, "perdido": 0.0}, {"name": "F10", "ag": 48, "loja": 40, "nf": 32, "dec": 37, "semnf": 7, "rs": 42667.52, "perdido": 11960.67}, {"name": "F4", "ag": 47, "loja": 35, "nf": 31, "dec": 32, "semnf": 6, "rs": 72047.17, "perdido": 19174.99}, {"name": "F9", "ag": 40, "loja": 37, "nf": 32, "dec": 37, "semnf": 5, "rs": 54633.55, "perdido": 3325.01}, {"name": "F5 T", "ag": 34, "loja": 28, "nf": 16, "dec": 28, "semnf": 14, "rs": 51476.41, "perdido": 59770.27}], "etapas": [743, 1031, 14, 136, 93, 662], "crm_sem_chat": null, "crm_sem_chat_linhas": null, "label": "Setembro", "short": "Set", "range": "01/09 a 30/09", "notas": 4807, "h2024": 297, "h2025": null, "atend": 2679, "meta_spend": 10789.53, "g_spend": 8025.75, "meta_conv": 1705, "g_conv": 1004.5}, "out": {"linhas": 464, "sem_data": 4, "ag": 460, "loja": 381, "nf": 328, "nf_loja": 303, "nf_naofoi": 25, "dec": 377, "semnf": 72, "perdido": 110999.61, "inverso": 23, "rs": 636838.81, "rede": 9745712.5, "clientes_nf": 322, "both": 300, "comvalor": 208, "diverge": 67, "menor": 52, "maior": 15, "soma_dec": 409494.26, "soma_pr": 405200.51, "top": [{"name": "Blueground Airport Services Ltda", "cons": "VANESSA", "sheet": 10996.0, "proteus": 23179.88}, {"name": "Orplac Organização De Placas E Adesivos Ltda", "cons": "VITORIA", "sheet": 10507.11, "proteus": 5764.4}, {"name": "Bruno Wallison Feranandes Nunes", "cons": "IANDRA", "sheet": 849.0, "proteus": 4904.36}, {"name": "Erivelton Xavier", "cons": "VITORIA", "sheet": 5415.0, "proteus": 2006.11}, {"name": "Hugo Tales Pinheiro", "cons": "VANESSA", "sheet": 6699.0, "proteus": 3812.59}, {"name": "Francisco Elder Mendonça", "cons": "IANDRA", "sheet": 1996.0, "proteus": 3992.0}, {"name": "Vancley Pereira Da Silva", "cons": "IANDRA", "sheet": 2636.93, "proteus": 4176.98}, {"name": "João Roberto De Oliveira Felix", "cons": "VITORIA", "sheet": 1498.98, "proteus": 2998.3}], "cons": [{"name": "VITORIA", "ag": 113, "loja": 113, "nf": 105, "dec": 113, "semnf": 8, "rs": 209150.03, "perdido": 23452.33}, {"name": "VANESSA", "ag": 93, "loja": 80, "nf": 64, "dec": 78, "semnf": 17, "rs": 129794.59, "perdido": 31060.05}, {"name": "JHONNY", "ag": 92, "loja": 58, "nf": 50, "dec": 57, "semnf": 18, "rs": 85663.72, "perdido": 18298.63}, {"name": "IANDRA", "ag": 89, "loja": 75, "nf": 66, "dec": 75, "semnf": 13, "rs": 126912.25, "perdido": 8446.68}, {"name": "GABRIEL", "ag": 70, "loja": 53, "nf": 41, "dec": 52, "semnf": 16, "rs": 78562.85, "perdido": 29741.92}, {"name": "TAINARA", "ag": 2, "loja": 1, "nf": 1, "dec": 1, "semnf": 0, "rs": 1380.3, "perdido": 0.0}, {"name": "THAIS", "ag": 1, "loja": 1, "nf": 1, "dec": 1, "semnf": 0, "rs": 5375.07, "perdido": 0.0}], "fil": [{"name": "F2", "ag": 80, "loja": 69, "nf": 57, "dec": 69, "semnf": 15, "rs": 83034.69, "perdido": 47443.61}, {"name": "F12", "ag": 71, "loja": 53, "nf": 52, "dec": 52, "semnf": 10, "rs": 93029.82, "perdido": 12500.97}, {"name": "F5 L", "ag": 67, "loja": 54, "nf": 43, "dec": 54, "semnf": 12, "rs": 68196.56, "perdido": 11452.23}, {"name": "F4", "ag": 61, "loja": 49, "nf": 44, "dec": 48, "semnf": 7, "rs": 107429.65, "perdido": 15306.33}, {"name": "F11", "ag": 59, "loja": 51, "nf": 43, "dec": 50, "semnf": 9, "rs": 58519.41, "perdido": 2830.2}, {"name": "F7", "ag": 51, "loja": 43, "nf": 39, "dec": 42, "semnf": 7, "rs": 64599.34, "perdido": 0.0}, {"name": "F9", "ag": 38, "loja": 32, "nf": 26, "dec": 32, "semnf": 6, "rs": 45931.24, "perdido": 5932.27}, {"name": "F5 T", "ag": 33, "loja": 30, "nf": 24, "dec": 30, "semnf": 6, "rs": 116098.1, "perdido": 15534.0}], "etapas": [1528, 887, 303, 173, 76, 411], "crm_sem_chat": null, "crm_sem_chat_linhas": null, "label": "Outubro", "short": "Out", "range": "01/10 a 31/10", "notas": 4969, "h2024": 301, "h2025": null, "atend": 3378, "meta_spend": 9960.29, "g_spend": 7683.35, "meta_conv": 1701, "g_conv": 1226.2}}};
+</script>
+<script>
+(function(){
+  "use strict";
+  var ORDER = ["jul","ago","set","out"];
+  var PERIODS = [{k:"all",label:"Jul–Out"}].concat(ORDER.map(function(k){return {k:k,label:RAW.m[k].label};}));
+  var FIL_NAMES = {"F11":"F11 · Riomar","F4":"F4 · Rogaciano","F7":"F7 · Messejana","F10":"F10 · Jóquei","F5 L":"F5 L · Maracanaú (leve)","F12":"F12 · Meton de Alencar","F2":"F2 · Barão","F9":"F9 · Terrazo","F5 T":"F5 T · Maracanaú (truck)","F5":"F5 · Maracanaú"};
+  var CONS_COLOR = {VITORIA:"var(--series-vitoria)",THAIS:"var(--series-thais)",VANESSA:"var(--series-vanessa)",TAINARA:"var(--series-tainara)",IANDRA:"var(--series-iandra)",CLAUDIA:"var(--series-claudia)",JHONNY:"var(--series-jhonny)",GABRIEL:"var(--series-gabriel)"};
+  var MIN_CONS = 20, MIN_FIL = 25;
+
+  var f1 = function(n){ return (isFinite(n)?n:0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1}); };
+  var pc = function(a,b){ return b ? a/b*100 : 0; };
+  var nI = function(n){ return Math.round(n).toLocaleString('pt-BR'); };
+  var brl = function(n){ return 'R$ ' + (n||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+  var brl0 = function(n){ return 'R$ ' + Math.round(n||0).toLocaleString('pt-BR'); };
+  var kBRL = function(n){ return n>=1e6 ? 'R$ '+f1(n/1e6)+' mi' : 'R$ '+nI(n/1000)+' mil'; };
+  var esc = function(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); };
+  var title = function(s){ s=String(s).toLowerCase(); return s.charAt(0).toUpperCase()+s.slice(1); };
+  var $ = function(id){ return document.getElementById(id); };
+
+  var SUM = ["atend","linhas","sem_data","ag","loja","nf","nf_loja","nf_naofoi","dec","semnf","perdido","inverso","rs","rede","notas","clientes_nf","both","comvalor","diverge","menor","maior","soma_dec","soma_pr","meta_spend","g_spend","meta_conv","g_conv","h2024","crm_sem_chat_linhas","crm_sem_chat"];
+
+  function mergeRows(list, extra){
+    var map = {};
+    list.forEach(function(rows){ rows.forEach(function(r){
+      var t = map[r.name] || (map[r.name] = {name:r.name, ag:0, loja:0, nf:0, dec:0, semnf:0, rs:0, perdido:0});
+      ["ag","loja","nf","dec","semnf","rs","perdido"].forEach(function(f){ t[f] += (r[f]||0); });
+    });});
+    return Object.keys(map).map(function(k){ return map[k]; });
+  }
+
+  function period(key){
+    if (key !== "all"){ var o = Object.assign({}, RAW.m[key]); o.key=key; o.months=[key]; return o; }
+    var P = {key:"all", months:ORDER.slice(), label:"Jul–Out", long:"julho a outubro de 2026", range:"01/07 a 31/10"};
+    SUM.forEach(function(f){ P[f] = ORDER.reduce(function(s,k){ return s + (RAW.m[k][f]||0); },0); });
+    P.etapas = [0,0,0,0,0,0];
+    ORDER.forEach(function(k){ RAW.m[k].etapas.forEach(function(v,i){ P.etapas[i]+=v; }); });
+    P.cons = mergeRows(ORDER.map(function(k){ return RAW.m[k].cons; }));
+    P.fil  = mergeRows(ORDER.map(function(k){ return RAW.m[k].fil; }));
+    P.top = [].concat.apply([], ORDER.map(function(k){ return RAW.m[k].top.map(function(t){ return Object.assign({mes:RAW.m[k].short},t); }); }))
+             .sort(function(a,b){ return Math.abs(b.proteus-b.sheet) - Math.abs(a.proteus-a.sheet); }).slice(0,8);
+    P.h2025_parcial = ORDER.filter(function(k){ return RAW.m[k].h2025 != null; });
+    P.h2025 = P.h2025_parcial.reduce(function(s,k){ return s + RAW.m[k].h2025; },0);
+    P.snapshot = "jul: 17/09 · ago–out: 05/11";
+    P.crm_sem_chat_meses = ORDER.filter(function(k){ return RAW.m[k].crm_sem_chat != null; });
+    return P;
+  }
+
+  function derive(P){
+    P.midia = P.meta_spend + P.g_spend;
+    P.r_ag = pc(P.ag, P.atend); P.r_loja = pc(P.loja, P.ag); P.r_venda = pc(P.nf, P.loja);
+    P.e2e = pc(P.nf, P.atend); P.conv = pc(P.nf, P.ag);
+    P.ticket = P.clientes_nf ? P.rs / P.clientes_nf : 0;
+    P.perda_topo = P.atend - P.ag; P.noshow = P.ag - P.loja; P.saiu_sem = P.loja - P.nf_loja;
+    return P;
+  }
+
+  /* ---------------- render ---------------- */
+  var CUR = "all";
+  function render(){
+    var P = derive(period(CUR));
+    var isAll = CUR === "all";
+    var lbl = isAll ? "Jul–Out/2026" : P.label + "/2026";
+    $("eyebrow").textContent = "Gerardo Bastos · CRM (Google Sheets) × Proteus (ERP) · " + lbl;
+    $("subhead").innerHTML = "O funil de " + (isAll ? "julho a outubro" : P.label.toLowerCase()) + " medido ponta a ponta, com as três fontes encadeadas: <b>" + nI(P.atend) + " atendimentos</b> da Omnichat, <b>" + nI(P.ag) + " agendamentos</b> da planilha do CRM e as <b>" + nI(P.notas) + " notas fiscais</b> emitidas no Proteus " + (isAll ? "entre 01/07 e 31/10" : "entre " + P.range) + ". Volume em cada etapa, taxa de conversão entre etapas e onde o funil vaza.";
+    document.title = "Funil Lead → Agenda → Venda · " + lbl;
+
+    /* funil */
+    var w = [P.atend, P.ag, P.loja, P.nf].map(function(v){ return v / P.atend * 100; });
+    w.push(w[3] * 0.85);
+    for (var i=0;i<4;i++){
+      var a = (100-w[i])/2, b = (100-w[i+1])/2;
+      $("b"+i).style.clipPath = "polygon("+a+"% 0, "+(100-a)+"% 0, "+(100-b)+"% 100%, "+b+"% 100%)";
+    }
+    $("v0").textContent = nI(P.atend); $("v1").textContent = nI(P.ag); $("v2").textContent = nI(P.loja); $("v3").textContent = nI(P.nf);
+    $("r0").textContent = f1(P.r_ag)+"%"; $("r1").textContent = f1(P.r_loja)+"%"; $("r2").textContent = f1(P.r_venda)+"%";
+    $("e2e").textContent = f1(P.e2e)+"%";
+    $("cost").innerHTML = brl(P.midia/P.atend)+" por atendimento · "+brl(P.midia/P.ag)+" por agendamento · <b style=\"color:var(--text-primary)\">"+brl(P.midia/P.nf)+" por venda</b>, sobre "+brl(P.midia)+" de mídia";
+    $("fstack").setAttribute("aria-label", "Funil de "+lbl+": "+nI(P.atend)+" atendimentos; "+nI(P.ag)+" agendamentos, "+f1(P.r_ag)+"%; "+nI(P.loja)+" compareceram, "+f1(P.r_loja)+"%; "+nI(P.nf)+" com nota fiscal, "+f1(P.r_venda)+"% de quem compareceu. Ponta a ponta, "+f1(P.e2e)+"%.");
+
+    var attr = P.meta_conv + P.g_conv;
+    if (attr <= P.atend){
+      $("note-top").innerHTML = "<b style=\"color:var(--text-secondary)\">De onde vem o topo.</b> "+nI(P.atend)+" é o total de atendimentos da Omnichat no período, somando as seis etapas do funil dela — o mesmo número que o BI de Gerardo Bastos publica. As plataformas atribuem <b>"+nI(attr)+" ("+f1(pc(attr,P.atend))+"%)</b> a anúncio ("+nI(P.meta_conv)+" conversas iniciadas no Meta Ads, "+nI(P.g_conv)+" conversões no Google Ads); os outros <b>"+nI(P.atend-attr)+"</b> chegaram por orgânico, contato direto ou recompra.";
+    } else {
+      $("note-top").innerHTML = "<b style=\"color:var(--text-secondary)\">De onde vem o topo.</b> "+nI(P.atend)+" é o total de atendimentos da Omnichat no período, somando as seis etapas do funil dela. As plataformas reportam <b>"+nI(attr)+"</b> conversões ("+nI(P.meta_conv)+" conversas no Meta Ads, "+nI(P.g_conv)+" conversões no Google Ads) — mais do que as conversas recebidas, porque contam por regras diferentes (janela de 7 dias, ações que não abrem chat). Nesse período a atribuição a anúncio não pode ser lida como recorte do total.";
+    }
+    var semChat = "";
+    if (isAll){
+      semChat = " Cobertura CRM × Omnichat: em julho, 97 das 532 linhas do CRM não tinham chat correspondente; de agosto a outubro o cruzamento não foi refeito (a credencial da API da Omnichat expirou durante a análise).";
+    } else if (P.crm_sem_chat != null){
+      semChat = " E "+nI(P.crm_sem_chat)+" das "+nI(P.crm_sem_chat_linhas)+" linhas do CRM não têm chat correspondente na Omnichat, então as duas pontas do funil não se encaixam com precisão de linha a linha.";
+    } else {
+      semChat = " O cruzamento linha a linha CRM × Omnichat deste mês não foi refeito (a credencial da API da Omnichat expirou durante a análise).";
+    }
+    $("note-match").innerHTML = nI(P.nf_naofoi)+" dos "+nI(P.nf)+" agendados com nota fiscal estão marcados como “não foi à loja” na planilha. Por isso a etapa final não é subconjunto exato da anterior: entre os "+nI(P.loja)+" que compareceram, "+nI(P.nf_loja)+" têm nota ("+f1(pc(P.nf_loja,P.loja))+"%)."+semChat;
+
+    renderEvo(P);
+    renderLeak(P, lbl, isAll);
+    renderOmni(P, isAll);
+    renderHist(P, isAll);
+    renderCons(P);
+    renderFil(P);
+    renderDec(P);
+    renderDiv(P, isAll);
+    renderRecs(P);
+    $("topo-c2").innerHTML = "Os relatórios do Proteus cobrem cada mês do dia 01 ao último dia. Agendamentos marcados nos últimos dias do mês, com a visita no mês seguinte, aparecem sem nota no mês em que foram agendados — não devem ser lidos como “não comprou”. No período, "+nI(P.sem_data)+" linha(s) do CRM vieram sem data de agendamento e ficaram fora da base de agendados.";
+  }
+
+  function renderEvo(P){
+    var rows = ORDER.map(function(k){ return derive(period(k)); });
+    var first = rows[0], last = rows[rows.length-1];
+    var d = last.conv - first.conv;
+    $("evo-h").textContent = "Agenda → venda foi de " + f1(first.conv) + "% em julho para " + f1(last.conv) + "% em outubro.";
+    var best = rows.slice().sort(function(a,b){ return b.conv-a.conv; })[0];
+    var cheap = rows.slice().sort(function(a,b){ return a.midia/a.nf - b.midia/b.nf; })[0];
+    var dl = last.r_loja - first.r_loja, dv = last.r_venda - first.r_venda;
+    var sg = function(x){ return (x>=0?"+":"−")+f1(Math.abs(x))+" p.p."; };
+    $("evo-l").innerHTML = "Melhor mês em conversão de agenda: <b>"+best.label.toLowerCase()+" ("+f1(best.conv)+"%)</b>. Menor custo de mídia por venda com nota: <b>"+cheap.label.toLowerCase()+" ("+brl(cheap.midia/cheap.nf)+")</b>. De julho a outubro, o comparecimento foi de "+f1(first.r_loja)+"% para "+f1(last.r_loja)+"% ("+sg(dl)+") e a conversão de quem chegou à loja foi de "+f1(first.r_venda)+"% para "+f1(last.r_venda)+"% ("+sg(dv)+"), com os agendamentos passando de "+nI(first.ag)+" para "+nI(last.ag)+"."+(dl<0 && dv>0 ? " A melhora de "+sg(d)+" em agenda → venda veio de dentro da loja: menos gente compareceu, mas quem foi comprou mais." : (dl>0 && dv<0 ? " A variação de "+sg(d)+" veio do comparecimento, não da venda em loja." : ""));
+    var mx = Math.max.apply(null, rows.map(function(r){ return r.conv; }));
+    $("spark").innerHTML = rows.map(function(r){ return '<div class="col'+(CUR===r.key?' sel':'')+'"><span class="v">'+f1(r.conv)+'%</span><div class="bar" style="height:'+(r.conv/mx*60)+'px"></div></div>'; }).join("");
+    $("spark-lbl").innerHTML = rows.map(function(r){ return '<span>'+r.label.slice(0,3)+' · agenda→venda</span>'; }).join("");
+    var all = derive(period("all"));
+    $("evo-body").innerHTML = rows.concat([all]).map(function(r){
+      var sel = (CUR===r.key) ? ' class="sel"' : (r.key==="all"?' class="total'+(CUR==="all"?' sel':'')+'"':'');
+      return '<tr'+sel+'><td class="name">'+(r.key==="all"?"Jul–Out":r.label)+'</td><td class="num">'+nI(r.atend)+'</td><td class="num">'+nI(r.ag)+'</td><td class="num">'+f1(r.r_ag)+'%</td><td class="num">'+f1(r.r_loja)+'%</td><td class="num">'+f1(r.r_venda)+'%</td><td class="num">'+f1(r.conv)+'%</td><td class="num">'+nI(r.nf)+'</td><td class="num">'+brl(r.midia/r.nf)+'</td><td class="num">'+brl(r.ticket)+'</td></tr>';
+    }).join("");
+  }
+
+  function renderLeak(P, lbl, isAll){
+    $("leak-h").textContent = f1(pc(P.perda_topo,P.atend)) + "% dos atendimentos param antes do agendamento.";
+    $("leak-l1").innerHTML = "Com o topo real na mesa, a proporção fica clara: <b>"+nI(P.perda_topo)+" atendimentos</b> não viraram agendamento, contra "+nI(P.noshow)+" que agendaram e não apareceram e <b>"+nI(P.saiu_sem)+" que apareceram e saíram sem nota</b>. Em volume, o gargalo é o topo. Em dinheiro por esforço, ainda é a loja — os "+nI(P.saiu_sem)+" já estavam fisicamente lá, com orçamento na mão.";
+    $("leak-l2").innerHTML = "Depois do agendamento o funil segura: <b>"+f1(P.r_loja)+"% comparecem</b> e <b>"+f1(P.r_venda)+"% dos que comparecem</b> saem com nota. O problema é chegar ao agendamento — só <b>"+f1(P.r_ag)+"%</b> dos atendimentos chegam.";
+    $("leak-l3").innerHTML = "Em dinheiro: os "+nI(P.clientes_nf)+" clientes com nota somam <b>"+brl(P.rs)+"</b>, ticket médio de "+brl(P.ticket)+", sobre "+brl(P.midia)+" de mídia"+(isAll?" no período":" no mês")+". São <b>"+f1(pc(P.rs,P.rede))+"% dos "+brl(P.rede)+"</b> faturados pela rede"+(isAll?" no período":" no mês")+" — o funil do CRM é uma fatia pequena do caixa da rede.";
+    $("leak-tiles").innerHTML =
+      tile(nI(P.perda_topo),"crit","atendimentos que <b>não viraram agendamento</b> ("+f1(pc(P.perda_topo,P.atend))+"%)") +
+      tile(nI(P.noshow),"crit","agendaram e <b>não compareceram</b> ("+f1(pc(P.noshow,P.ag))+"% de no-show)") +
+      tile(nI(P.saiu_sem),"crit","compareceram à loja e <b>não saíram com nota</b> ("+f1(pc(P.saiu_sem,P.loja))+"%)") +
+      '<div class="tile"><div class="tile-value" style="color:var(--series-claudia)">'+brl(P.midia/P.nf)+'</div><div class="tile-label">de mídia por <b>venda com nota</b> · ticket médio '+brl(P.ticket)+'</div></div>';
+  }
+  function tile(v,cls,l){ return '<div class="tile"><div class="tile-value '+cls+'">'+v+'</div><div class="tile-label">'+l+'</div></div>'; }
+
+  function renderOmni(P, isAll){
+    var e = P.etapas, tot = P.atend;
+    $("omni-label").textContent = "As seis etapas da Omnichat · " + (isAll ? "julho a outubro" : P.label.toLowerCase());
+    $("omni-h").textContent = "O kanban da Omnichat registra " + nI(e[3]) + " agendamentos. A planilha registra " + nI(P.ag) + ".";
+    $("omni-l").innerHTML = "A contagem de conversa é confiável — é a Omnichat que recebe o contato. A <b>classificação por etapa não é</b>: no mesmo período, a Omnichat marca "+nI(e[3])+" chats em “Agendamento” contra "+nI(P.ag)+" agendamentos na planilha (<b>"+f1(pc(e[3],P.ag))+"% do real</b>) e "+nI(e[4])+" em “Venda Realizada” contra "+nI(P.dec)+" declarados e "+nI(P.nf)+" com nota (<b>"+f1(pc(e[4],P.nf))+"% das notas</b>). A distribuição abaixo mede o preenchimento do kanban, não o avanço do cliente.";
+    var names = ["Conexão","Orçamento enviado","Em negociação","Agendamento","Venda realizada","Perdido"];
+    var colors = ["#9cc4ee","#6aa6e3","#4a90d9","#2a78d6","#1a5aa8","var(--critical)"];
+    var mx = Math.max.apply(null, e);
+    $("omni-chart").innerHTML = e.map(function(v,i){
+      return '<div class="bar-row"><div class="bar-name"><span class="bar-swatch" style="background:'+colors[i]+'"></span>'+names[i]+'</div><div class="bar-track"><div class="bar-fill" style="width:'+(v/mx*100)+'%;background:'+colors[i]+'"></div></div><div class="bar-value"><b>'+nI(v)+'</b> <span>'+f1(pc(v,tot))+'%</span></div></div>';
+    }).join("");
+    $("omni-n").innerHTML = "Os "+nI(e[0])+" parados em “Conexão” e os "+nI(e[5])+" em “Perdido” somam <b>"+f1(pc(e[0]+e[5],tot))+"%</b> do período. Quanto disso é lead frio de verdade e quanto é chat que ninguém moveu de coluna, os dados não separam. Recorte da classificação: "+(isAll?P.snapshot:(P.key==="jul"?"17/09/2026":"05/11/2026"))+".";
+  }
+
+  function renderHist(P, isAll){
+    var cur = P.linhas, h24 = P.h2024, h25 = P.h2025;
+    var bars = [];
+    if (isAll){
+      $("hist-label").textContent = "Volume de agendamento · julho a outubro contra o mesmo período de 2024";
+      $("hist-hero").textContent = (cur>=h24?"+":"−")+f1(Math.abs(pc(cur-h24,h24)))+"%";
+      $("hist-cap").innerHTML = "de agendamentos de julho a outubro/2026 contra o mesmo período de 2024: <b>"+nI(cur)+"</b> contra "+nI(h24)+".";
+      bars = [{n:"Jul–Out/2024",v:h24},{n:"Jul–Out/2026",v:cur,hi:1}];
+      $("hist-n").innerHTML = "A base histórica (aba <span style=\"font-family:var(--font-mono)\">Página12</span>) vai de jan/2024 a ago/2025, então 2025 só existe para julho e agosto ("+nI(h25)+" agendamentos nesses dois meses) e não entra na soma do período. Só a coluna de volume dessa base é confiável — comparecimento e valor de venda dela têm preenchimento irregular. Não dá para comparar taxa de conversão com anos anteriores, só volume.";
+    } else {
+      var ref = h25 != null ? h25 : h24, refY = h25 != null ? "2025" : "2024";
+      $("hist-label").textContent = "Volume de agendamento · " + P.label.toLowerCase() + " contra " + P.label.toLowerCase();
+      $("hist-hero").textContent = (cur>=ref?"+":"−")+f1(Math.abs(pc(cur-ref,ref)))+"%";
+      $("hist-cap").innerHTML = "de agendamentos em "+P.label.toLowerCase()+"/2026 contra "+P.label.toLowerCase()+"/"+refY+": <b>"+nI(cur)+"</b> contra "+nI(ref)+(h25!=null?" e "+nI(h24)+" em 2024.":".");
+      bars = [{n:P.short+"/2024",v:h24}];
+      if (h25 != null) bars.push({n:P.short+"/2025",v:h25});
+      bars.push({n:P.short+"/2026",v:cur,hi:1});
+      $("hist-n").innerHTML = "A base histórica (aba <span style=\"font-family:var(--font-mono)\">Página12</span>) vai de jan/2024 a ago/2025"+(h25==null?" — por isso "+P.label.toLowerCase()+"/2025 não existe e a comparação é com 2024":"")+". Só a coluna de volume dela é confiável: comparecimento e valor de venda têm preenchimento irregular. Não dá para comparar taxa de conversão com anos anteriores, só volume.";
+    }
+    var mx = Math.max.apply(null, bars.map(function(b){ return b.v; }));
+    $("hist-chart").innerHTML = bars.map(function(b){
+      return '<div class="bar-row"><div class="bar-name">'+b.n+'</div><div class="bar-track"><div class="bar-fill" style="width:'+(b.v/mx*100)+'%;background:'+(b.hi?'var(--series-claudia)':'var(--baseline)')+'"></div></div><div class="bar-value"><b>'+nI(b.v)+'</b> <span>agend.</span></div></div>';
+    }).join("");
+  }
+
+  function renderCons(P){
+    var rows = P.cons.filter(function(r){ return r.ag>0; });
+    rows.forEach(function(r){ r.pct = pc(r.nf,r.ag); r.small = r.ag < MIN_CONS; });
+    rows.sort(function(a,b){ return (a.small-b.small) || (b.pct-a.pct); });
+    var chart = $("chart"), tip = $("tooltip");
+    chart.innerHTML = "";
+    rows.forEach(function(r){
+      var color = CONS_COLOR[r.name] || "var(--baseline)";
+      var row = document.createElement("div"); row.className = "bar-row";
+      row.innerHTML = '<div class="bar-name"><span class="bar-swatch" style="background:'+color+'"></span>'+esc(r.name)+'</div><div class="bar-track"><div class="bar-fill" tabindex="0" role="img" style="width:'+r.pct+'%;background:'+color+'" aria-label="'+esc(r.name)+': '+f1(r.pct)+'% de conversão, '+r.nf+' notas em '+r.ag+' agendamentos"></div></div><div class="bar-value"><b>'+f1(r.pct)+'%</b> <span>'+r.nf+'/'+r.ag+'</span></div>';
+      var fill = row.querySelector(".bar-fill"), track = row.querySelector(".bar-track");
+      var show = function(){
+        tip.textContent = r.name+' — '+r.nf+'/'+r.ag+' agendamentos ('+f1(r.pct)+'%) · '+brl(r.rs);
+        var rect = track.getBoundingClientRect(), sh = document.querySelector('.sheet').getBoundingClientRect();
+        tip.style.left = (rect.left - sh.left + fill.offsetWidth) + 'px';
+        tip.style.top = (rect.top - sh.top) + 'px';
+        tip.classList.add('show');
+      };
+      var hide = function(){ tip.classList.remove('show'); };
+      ["mouseenter","mousemove","focus"].forEach(function(ev){ fill.addEventListener(ev, show); });
+      ["mouseleave","blur"].forEach(function(ev){ fill.addEventListener(ev, hide); });
+      chart.appendChild(row);
+    });
+    var big = rows.filter(function(r){ return !r.small; });
+    if (big.length >= 2){
+      var top = big[0], bot = big[big.length-1];
+      var gap = top.pct - bot.pct;
+      var extra = bot.ag >= top.ag ? " Não é volume — "+title(bot.name)+" agendou <b>"+(bot.ag>top.ag?"mais":"o mesmo")+"</b> ("+bot.ag+" contra "+top.ag+") e faturou <b>"+kBRL(Math.max(0,top.rs-bot.rs))+" a menos</b>." : " "+title(top.name)+" faturou "+brl0(top.rs)+" com "+top.ag+" agendamentos; "+title(bot.name)+", "+brl0(bot.rs)+" com "+bot.ag+".";
+      $("cons-l").innerHTML = "A distância entre o topo e a base do time é de <b>"+nI(gap)+" pontos percentuais</b>: "+title(top.name)+" converte "+f1(top.pct)+"% dos agendamentos em nota, "+title(bot.name)+" converte "+f1(bot.pct)+"%."+extra;
+    } else { $("cons-l").innerHTML = ""; }
+    var avg = P.conv;
+    $("cons-body").innerHTML = rows.map(function(r){
+      return '<tr><td class="name"><span class="swatch-inline" style="background:'+(CONS_COLOR[r.name]||"var(--baseline)")+'"></span>'+esc(r.name)+'</td><td class="num">'+r.ag+'</td><td class="num">'+r.loja+' <span style="color:var(--text-muted)">('+f1(pc(r.loja,r.ag))+'%)</span></td><td class="num">'+r.nf+'</td><td class="num">'+(r.small?'<span class="muted">'+f1(r.pct)+'%</span>':'<span class="pill '+(r.pct>=avg?'ok':'bad')+'">'+f1(r.pct)+'%</span>')+'</td><td class="num">'+brl(r.rs)+'</td></tr>';
+    }).join("") + '<tr class="total"><td>TOTAL</td><td class="num">'+nI(P.ag)+'</td><td class="num">'+nI(P.loja)+' <span style="font-weight:400">('+f1(P.r_loja)+'%)</span></td><td class="num">'+nI(P.nf)+'</td><td class="num">'+f1(P.conv)+'%</td><td class="num">'+brl(P.rs)+'</td></tr>';
+    var smalls = rows.filter(function(r){ return r.small; });
+    $("cons-n").innerHTML = (smalls.length ? smalls.map(function(r){ return title(r.name)+" ("+r.ag+")"; }).join(", ")+" "+(smalls.length>1?"têm":"tem")+" menos de "+MIN_CONS+" agendamentos no período — amostra insuficiente para leitura de taxa. " : "") + "Pílula verde = conversão igual ou acima da média do período ("+f1(avg)+"%); vermelha = abaixo.";
+  }
+
+  function renderFil(P){
+    var rows = P.fil.filter(function(r){ return r.ag>0; });
+    rows.forEach(function(r){ r.pct = pc(r.nf,r.ag); r.small = r.ag < MIN_FIL; });
+    rows.sort(function(a,b){ return (a.small-b.small) || (b.pct-a.pct); });
+    var big = rows.filter(function(r){ return !r.small; });
+    if (big.length >= 2){
+      var t = big[0], b = big[big.length-1];
+      $("fil-l").innerHTML = "Espalhamento de <b>"+f1(t.pct-b.pct)+" pontos</b> entre a melhor e a pior filial com amostra utilizável: "+t.name+" converte "+f1(t.pct)+"% dos agendamentos em nota, "+b.name+" converte "+f1(b.pct)+"%"+(Math.abs(t.ag-b.ag) <= Math.max(10, t.ag*0.2) ? ". As duas recebem volume parecido ("+t.ag+" e "+b.ag+" agendamentos)." : " ("+t.ag+" e "+b.ag+" agendamentos).");
+    }
+    $("filial-body").innerHTML = rows.map(function(r){
+      return '<tr><td class="name">'+esc(FIL_NAMES[r.name]||r.name)+(r.small?' <span style="color:var(--text-muted);font-weight:400">· amostra baixa</span>':'')+'</td><td class="num">'+r.ag+'</td><td class="num">'+r.nf+'</td><td class="num">'+(r.small?'<span class="muted">'+f1(r.pct)+'%</span>':'<span class="pill '+(r.pct>=P.conv?'ok':'bad')+'">'+f1(r.pct)+'%</span>')+'</td><td class="num">'+brl(r.rs)+'</td></tr>';
+    }).join("") + '<tr class="total"><td>TOTAL</td><td class="num">'+nI(P.ag)+'</td><td class="num">'+nI(P.nf)+'</td><td class="num">'+f1(P.conv)+'%</td><td class="num">'+brl(P.rs)+'</td></tr>';
+    var smalls = rows.filter(function(r){ return r.small; });
+    var rng = big.map(function(r){ return r.ag; });
+    $("fil-n").innerHTML = (smalls.length ? smalls.map(function(r){ return r.name+" ("+r.ag+")"; }).join(" e ")+" "+(smalls.length>1?"ficam":"fica")+" fora da leitura por amostra insuficiente. " : "") + (rng.length ? "As demais têm entre "+Math.min.apply(null,rng)+" e "+Math.max.apply(null,rng)+" agendamentos." : "");
+  }
+
+  function renderDec(P){
+    $("dec-h").textContent = brl(P.perdido) + " de venda declarada sem nota fiscal correspondente.";
+    $("dec-l").innerHTML = "Das <b>"+nI(P.dec)+"</b> linhas marcadas “HOUVE VENDA? = SIM” entre os agendados, <b>"+nI(P.semnf)+" ("+f1(pc(P.semnf,P.dec))+"%)</b> não têm nenhuma nota emitida para aquele telefone no mesmo mês. O inverso também existe: "+nI(P.inverso)+" casos de nota emitida com a planilha dizendo que não vendeu.";
+    $("dec-tiles").innerHTML = tile(nI(P.dec),"","vendas <b>declaradas</b> na planilha do CRM") + tile(nI(P.semnf),"crit","dessas <b>sem nota fiscal</b> no Proteus — "+brl(P.perdido)+" declarados") + tile(nI(P.inverso),"warn","o inverso: <b>nota emitida</b>, planilha diz que não vendeu");
+    var avg = pc(P.semnf,P.dec);
+    var rows = P.cons.filter(function(r){ return r.dec>0; }).sort(function(a,b){ return b.perdido-a.perdido; });
+    $("leak-body").innerHTML = rows.map(function(r){
+      var p = pc(r.semnf,r.dec);
+      return '<tr><td class="name"><span class="swatch-inline" style="background:'+(CONS_COLOR[r.name]||"var(--baseline)")+'"></span>'+esc(r.name)+'</td><td class="num">'+r.dec+'</td><td class="num">'+r.semnf+'</td><td class="num"><span class="pill '+(p>avg?'bad':'ok')+'">'+f1(p)+'%</span></td><td class="num">'+brl(r.perdido)+'</td></tr>';
+    }).join("") + '<tr class="total"><td>TOTAL</td><td class="num">'+nI(P.dec)+'</td><td class="num">'+nI(P.semnf)+'</td><td class="num">'+f1(avg)+'%</td><td class="num">'+brl(P.perdido)+'</td></tr>';
+    $("dec-n").innerHTML = "Tabela ordenada por valor declarado sem nota. Interpretação ambígua: uma venda declarada sem nota pode ser erro de preenchimento, venda faturada no CPF/telefone de outra pessoa, nota emitida no mês seguinte ou venda que não aconteceu. Os dados não separam esses quatro casos — o que dá para afirmar é o tamanho da caixa: "+f1(avg)+"% do que o CRM declara como venda não tem lastro fiscal no mesmo mês.";
+  }
+
+  function renderDiv(P, isAll){
+    var lower = P.menor, higher = P.maior;
+    $("div-l").innerHTML = "Entre os "+nI(P.both)+" clientes com venda confirmada dos dois lados, <b>"+nI(P.comvalor)+" têm valor preenchido na planilha</b> e <b>"+nI(P.diverge)+" desses divergem</b> da nota. Em "+nI(lower)+" casos a nota é menor que o declarado, em "+nI(higher)+" é maior. No agregado: "+brl(P.soma_dec)+" declarados contra "+brl(P.soma_pr)+" faturados ("+(P.soma_pr>=P.soma_dec?"+":"−")+f1(Math.abs(pc(P.soma_pr-P.soma_dec,P.soma_dec)))+"%)"+(Math.abs(pc(P.soma_pr-P.soma_dec,P.soma_dec))<3?", o que indica erro de preenchimento linha a linha, não viés sistemático.":", diferença grande demais para ser só arredondamento — vale auditar como o valor é preenchido.")+(isAll?" Abaixo, as 8 maiores diferenças do período.":"");
+    $("divergence-body").innerHTML = P.top.map(function(r){
+      var dif = r.proteus - r.sheet;
+      return '<tr><td class="name">'+esc(r.name)+(r.mes?' <span style="color:var(--text-muted);font-weight:400">· '+esc(r.mes)+'</span>':'')+'</td><td>'+esc(r.cons)+'</td><td class="num">'+brl(r.sheet)+'</td><td class="num">'+brl(r.proteus)+'</td><td class="num"><span class="pill neutral">'+(dif>0?'+':'−')+' '+brl(Math.abs(dif)).slice(3)+'</span></td></tr>';
+    }).join("");
+  }
+
+  function renderRecs(P){
+    var big = P.fil.filter(function(r){ return r.ag>=MIN_FIL; }).map(function(r){ return Object.assign({pct:pc(r.nf,r.ag)},r); }).sort(function(a,b){ return a.pct-b.pct; });
+    var w1 = big[0], w2 = big[1], best = big[big.length-1];
+    var third = Math.round(P.saiu_sem/3);
+    var r1 = '<b>'+nI(P.saiu_sem)+' clientes</b> compareceram e saíram sem nota. A '+brl0(P.ticket)+' de ticket médio, fechar um terço desses é <b>'+kBRL(third*P.ticket)+(P.months.length>1?' no período':' no mês')+'</b>, e é o único ponto do funil onde o cliente já está fisicamente na loja com orçamento na mão — o esforço por real recuperado é o menor dos três.'+(w1&&w2&&best?' Comece por <b>'+w1.name+' ('+f1(w1.pct)+'%)</b> e <b>'+w2.name+' ('+f1(w2.pct)+'%)</b>, as duas piores com amostra suficiente, contra a média de '+f1(P.conv)+'% e os '+f1(best.pct)+'% da '+best.name+'.':'');
+    var pp = P.atend/100, ppV = pp * P.conv/100;
+    var r2 = nI(P.perda_topo)+' conversas não viraram agenda. Cada ponto percentual a mais nos '+f1(P.r_ag)+'% vale <b>'+nI(pp)+' agendamentos</b>, <b>'+nI(ppV)+' vendas</b> e <b>'+kBRL(ppV*P.ticket)+'</b>'+(P.months.length>1?' no período':' por mês')+', com a conversão de agenda para venda que o time já entrega hoje. É a maior massa do funil e a de maior esforço: depende de tempo de primeira resposta, script e de trabalhar os '+nI(P.etapas[0])+' chats que pararam em “Conexão”.';
+    var r3 = 'Na planilha, <b>'+f1(pc(P.semnf,P.dec))+'%</b> das vendas declaradas não têm nota — exigir número de OS como condição para marcar SIM resolve na origem. Na Omnichat, o kanban registra <b>'+f1(pc(P.etapas[3],P.ag))+'%</b> dos agendamentos e <b>'+f1(pc(P.etapas[4],P.nf))+'%</b> das vendas reais, o que inutiliza a etapa como métrica. Enquanto os dois furos existirem, nenhuma taxa intermediária do funil é auditável, e a diferença entre '+f1(pc(P.dec,P.ag))+'% (planilha) e '+f1(P.conv)+'% (Proteus) continua sendo ruído caro.';
+    var recs = [["Atacar a conversão dentro da loja, não a agenda", r1],["Subir a conversão atendimento → agendamento", r2],["Fechar os dois furos de registro", r3]];
+    $("recs").innerHTML = recs.map(function(r,i){ return '<div class="rec"><div class="rec-n">'+(i+1)+'</div><div><p class="rec-t">'+r[0]+'</p><p class="rec-d">'+r[1]+'</p></div></div>'; }).join("");
+  }
+
+  /* ---------------- filtro ---------------- */
+  function setPeriod(k, push){
+    CUR = k;
+    Array.prototype.forEach.call($("seg").querySelectorAll("button"), function(b){ b.setAttribute("aria-pressed", b.dataset.k===k ? "true":"false"); });
+    if (push){ try { history.replaceState(null,"","#"+k); } catch(e){} }
+    render();
+  }
+  $("seg").innerHTML = PERIODS.map(function(p){ return '<button type="button" data-k="'+p.k+'" aria-pressed="false">'+p.label+'</button>'; }).join("");
+  $("seg").addEventListener("click", function(e){ var b = e.target.closest("button"); if (b) setPeriod(b.dataset.k, true); });
+  $("gen").textContent = RAW.generated;
+  var h = (location.hash||"").slice(1);
+  setPeriod(PERIODS.some(function(p){ return p.k===h; }) ? h : "all", false);
+})();
+</script>
+</body>
+</html>
